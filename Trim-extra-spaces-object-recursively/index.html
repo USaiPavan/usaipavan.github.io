@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <title>
+    Trim extra spaces in strings on objects recursively // Sai Pavan&#39;s blog
+  </title>
+
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="author" content="Sai Pavan">
+<meta name="generator" content="Hugo 0.17" />
+
+  <meta property="og:title" content="Trim extra spaces in strings on objects recursively" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:url" content="https://usaipavan.github.io/Trim-extra-spaces-object-recursively/" />
+
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/base-min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/pure-min.css">
+  
+  
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/grids-responsive-min.css">
+  
+  
+
+  <link rel="stylesheet" href="https://usaipavan.github.io//css/redlounge.css">
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Proza+Libre:400,200,100,700,300,500,600,800" rel="stylesheet"> 
+  <link href='//fonts.googleapis.com/css?family=Raleway:400,200,100,700,300,500,600,800' rel='stylesheet' type='text/css'>
+  <link href='//fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic' rel='stylesheet' type='text/css'>
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://usaipavan.github.io/touch-icon-144-precomposed.png">  
+  <link rel="shortcut icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
+  <link rel="shortcut icon" type="image/png" href="favicon-16x16.png" sizes="16x16" />
+
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Sai Pavan&#39;s blog" />
+
+    
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/styles/tomorrow-night-bright.min.css">
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+
+  
+
+  
+
+  
+
+  
+</head>
+
+<body>
+	
+
+	<div id="layout" class="pure-g">
+    <div class="sidebar pure-u-1 pure-u-md-1-4">
+  <div class="header">
+    
+
+	
+
+    <h1 class="brand-title">Sai Pavan&#39;s blog</h1>
+    <h2 class="brand-tagline">My tryst with .net and software programming in general</h2>
+
+    <nav class="nav">
+      <ul class="nav-list">
+        <li class="nav-item"><span class="nav-item-separator">//</span><a href="https://usaipavan.github.io/">Home</a></li>
+        
+          <li class="nav-item"><span class="nav-item-separator">//</span><a href="https://usaipavan.github.io/list">Blog</a></li>
+        
+      </ul>
+    </nav>
+
+    
+    <div class="social-buttons">
+              
+        
+        <a href="https://www.linkedin.com/in/usaipavan" target="_blank"><i class='fa fa-linkedin fa-lg fa-fw'></i></a>
+        
+              
+        
+        <a href="https://www.linkedin.com/in/usaipavan" target="_blank"><i class='fa fa-rss fa-lg fa-fw'></i></a>
+        
+              
+        
+        <a href="https://twitter.com/usaipavan" target="_blank"><i class='fa fa-twitter fa-lg fa-fw'></i></a>
+        
+      
+      
+    </div>
+    
+
+  </div>
+</div>
+
+	
+	
+
+    <div class="content pure-u-1 pure-u-md-3-4">
+		<a name="top"></a>
+		
+
+		
+			
+	    
+  		<section class="post">
+            <h1 class="post-title">
+              <a href="https://usaipavan.github.io/Trim-extra-spaces-object-recursively/">Trim extra spaces in strings on objects recursively</a>
+            </h1>
+            <h3 class="post-subtitle">
+            	
+            </h3>
+            
+            	<span class="post-date">
+                	<span class="post-date-day"><sup>27</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Feb</span> <span class="post-date-year">2016</span>
+            	</span>
+            	
+            
+            	
+            		<span class="post-author-single">By <a class="post-author"  target="">Sai Pavan</a></span>
+            		
+
+
+
+
+            	
+            
+
+			
+			
+
+			
+
+			
+
+            <p>Many of us might have had requirement to be able to trim extra spaces in strings on custom classes that we have created, at some point in our career.These extra spaces in strings might have come from a database or maybe from an external system. These not only cause waste of bandwidth but also causes the problem in terms of  comparison. Especially when working on APIs that will be used by mobile applications every byte that is being sent across the wire matters.</p>
+
+<p>I was in a similar scenario where we were sending JSON data to client application and we had to ensure that data being sent to application has as much low memory footprint as possible.When trying to trim spaces in the strings it was easy for custom classes which only had primitive types in them. However, it gets complicated as the custom classes start having complex objects. It gets more tricky when there are list of objects inside these custom classes. The solution that I could come up with was using reflection and recursion to achieve the final result. After a few iterations and clarifications on <a href="http://stackoverflow.com/questions/35234810/trim-spaces-in-a-object-recursively-using-reflection">StackOverflow</a> here is the final solution.</p>
+
+<p>I have created an extension method on object which handles a generic parameter. As a first step I have first trimmed all the strings at the object level. I have done this using reflection and link where we will identify all the strings and just trim the spaces on them which is symbol.</p>
+
+<pre><code class="language-csharp">
+    //Iterates all properties and trims the values if they are strings
+    var properties = obj.GetType().GetProperties(BindingFlags.Instance |    BindingFlags.Public)
+        .Where(prop =&gt; prop.PropertyType == typeof(string))
+        .Where(prop =&gt; prop.CanWrite &amp;&amp; prop.CanRead);
+    
+    foreach (var property in properties)
+    {
+        var value = (string) property.GetValue(obj, null);
+        if (value.HasValue())
+        {
+        var newValue = (object) value.Trim();
+        property.SetValue(obj, newValue, null);
+        }
+    }
+
+</code></pre>
+
+<p>As a next step I tried to take care of all the list of objects so that they can each be operated individually and spaces can be trimmed on them. To be able to achieve this I have relied on recursion.</p>
+
+<pre><code class="language-csharp">
+    // This is to take care of Lists. This iterates through each value
+    // in the list.
+    // For example, Countries which is a List&lt;Country&gt;
+    var baseTypeInfo = obj.GetType().BaseType;
+    if (baseTypeInfo != null &amp;&amp; baseTypeInfo.FullName.Contains(&quot;List&quot;))
+    {
+        var listCount = (int) obj.GetType().GetProperty(&quot;Count&quot;).GetValue(obj, null);
+        for (var innerIndex = 0; innerIndex &lt; listCount; innerIndex++)
+        {
+            var item = obj.GetType().GetMethod(&quot;get_Item&quot;, new[] {typeof(int)}).Invoke(obj, new object[] {innerIndex});
+            item.TrimSpaces(); // Recursive call
+        }
+    }
+
+</code></pre>
+
+<p>Now as the last step I have taken care of other custom objects inside the object so that  also be taken care of item in the spaces.</p>
+
+<pre><code>    // Now once we are in a complex type (for example Country) it then needs to
+    // be trimmed recursively using the initial peice of code of this method
+    // Hence if it is a complex type we are recursively calling TrimSpaces
+    var customTypes =
+    obj.GetType()
+       .GetProperties(BindingFlags.Instance | BindingFlags.Public)
+       .Where(prop =&gt; !prop.GetType().IsPrimitive &amp;&amp; prop.GetType().IsClass &amp;&amp; !prop.PropertyType.FullName.StartsWith(&quot;System&quot;));
+    
+    foreach (var customType in customTypes.Where(customType =&gt; 
+            customType.GetIndexParameters().Length == 0))
+            customType.GetValue(obj).TrimSpaces();
+    
+    return obj;
+</code></pre>
+
+<p>This solution is available on <a href="https://github.com/USaiPavan/BlogPostCode/tree/master/TrimSpacesRecursively">github</a> and can be used in any of the projects which require the capability of trimming of objects</p>
+
+	
+			
+
+			
+
+			<div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    
+        
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'usaipavan';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+			
+				<div class="paging">
+					<span class="paging-label">More Reading</span>
+					
+					<div class="paging-newer">
+						<span class="dark-red">Newer</span><span class="decorative-marker">//</span>
+						<a class="paging-link" href="https://usaipavan.github.io/Simpler-way-to-convert-nullable-type-to-value-type/">Simpler way to convert Nullable type to Value type</a>
+		            </div>
+		            
+
+					
+					<div class="paging-older">
+						<span class="dark-red">Older</span><span class="decorative-marker">//</span>
+			            <a class="paging-link" href="https://usaipavan.github.io/Sorting-custom-list-without-LINQ/">Sorting a custom list without LINQ</a>
+		            </div>
+		            
+	            </div>
+            
+          </section>
+          
+          	<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'usaipavan';
+    var disqus_identifier = 'https:\/\/usaipavan.github.io\/Trim-extra-spaces-object-recursively\/';
+    var disqus_title = 'Trim extra spaces in strings on objects recursively';
+    var disqus_url = 'https:\/\/usaipavan.github.io\/Trim-extra-spaces-object-recursively\/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          
+        
+      <div class="footer">
+	<hr class="thin" />
+	<div class="pure-menu pure-menu-horizontal pure-menu-open">
+		<ul class="footer-menu">
+		
+		</ul>
+	</div>
+
+	<p>&copy; 2016. All rights reserved.</p>
+</div>
+    </div>
+  </div>
+	
+
+	
+
+  
+</body>
+</html>

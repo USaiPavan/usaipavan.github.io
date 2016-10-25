@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <title>
+    Simpler way to convert Nullable type to Value type // Sai Pavan&#39;s blog
+  </title>
+
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="author" content="Sai Pavan">
+<meta name="generator" content="Hugo 0.17" />
+
+  <meta property="og:title" content="Simpler way to convert Nullable type to Value type" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:url" content="https://usaipavan.github.io/Simpler-way-to-convert-nullable-type-to-value-type/" />
+
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/base-min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/pure-min.css">
+  
+  
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/grids-responsive-min.css">
+  
+  
+
+  <link rel="stylesheet" href="https://usaipavan.github.io//css/redlounge.css">
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Proza+Libre:400,200,100,700,300,500,600,800" rel="stylesheet"> 
+  <link href='//fonts.googleapis.com/css?family=Raleway:400,200,100,700,300,500,600,800' rel='stylesheet' type='text/css'>
+  <link href='//fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic' rel='stylesheet' type='text/css'>
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://usaipavan.github.io/touch-icon-144-precomposed.png">  
+  <link rel="shortcut icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
+  <link rel="shortcut icon" type="image/png" href="favicon-16x16.png" sizes="16x16" />
+
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Sai Pavan&#39;s blog" />
+
+    
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/styles/tomorrow-night-bright.min.css">
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+
+  
+
+  
+
+  
+
+  
+</head>
+
+<body>
+	
+
+	<div id="layout" class="pure-g">
+    <div class="sidebar pure-u-1 pure-u-md-1-4">
+  <div class="header">
+    
+
+	
+
+    <h1 class="brand-title">Sai Pavan&#39;s blog</h1>
+    <h2 class="brand-tagline">My tryst with .net and software programming in general</h2>
+
+    <nav class="nav">
+      <ul class="nav-list">
+        <li class="nav-item"><span class="nav-item-separator">//</span><a href="https://usaipavan.github.io/">Home</a></li>
+        
+          <li class="nav-item"><span class="nav-item-separator">//</span><a href="https://usaipavan.github.io/list">Blog</a></li>
+        
+      </ul>
+    </nav>
+
+    
+    <div class="social-buttons">
+              
+        
+        <a href="https://www.linkedin.com/in/usaipavan" target="_blank"><i class='fa fa-linkedin fa-lg fa-fw'></i></a>
+        
+              
+        
+        <a href="https://www.linkedin.com/in/usaipavan" target="_blank"><i class='fa fa-rss fa-lg fa-fw'></i></a>
+        
+              
+        
+        <a href="https://twitter.com/usaipavan" target="_blank"><i class='fa fa-twitter fa-lg fa-fw'></i></a>
+        
+      
+      
+    </div>
+    
+
+  </div>
+</div>
+
+	
+	
+
+    <div class="content pure-u-1 pure-u-md-3-4">
+		<a name="top"></a>
+		
+
+		
+			
+	    
+  		<section class="post">
+            <h1 class="post-title">
+              <a href="https://usaipavan.github.io/Simpler-way-to-convert-nullable-type-to-value-type/">Simpler way to convert Nullable type to Value type</a>
+            </h1>
+            <h3 class="post-subtitle">
+            	
+            </h3>
+            
+            	<span class="post-date">
+                	<span class="post-date-day"><sup>18</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Mar</span> <span class="post-date-year">2016</span>
+            	</span>
+            	
+            
+            	
+            		<span class="post-author-single">By <a class="post-author"  target="">Sai Pavan</a></span>
+            		
+
+
+
+
+            	
+            
+
+			
+			
+
+			
+
+			
+
+            <p>The more we work with databases, more is the need for <a href="https://msdn.microsoft.com/en-us/library/1t3y8s4s.aspx">nullable types</a>. This is because of the inherent difference between the way value types are treated in object oriented world and the relational world. In the object oriented world the value types always have a value either the one that we assign or the one that is the default value. However, in the database world they are treated differently. They are assigned as a data type for a column and it is possible that the column has a value of the column could have NULL (obviously, not in case of NOT NULL columns). Now when this is to be translated back into object oriented languages like C# resort to something like nullable types. ORMs like Entity Framework also use a similar approach.</p>
+
+<p>Now when these values have to be converted from Nullable value types to normal C# value types we have to be careful in not running into InvalidOperationException</p>
+
+<pre><code class="language-csharp">
+    // Following line of code throws a InvalidOperationException
+    // with message as
+    // Nullable object must have a value.
+    DateTime? sourceValue = null;
+    DateTime destinationValue = sourceValue.Value;
+
+</code></pre>
+
+<p>In order to be able to avoid such an issue we must then resort to a HasValue check and when the value exists it will have to be assigned by calling the Value property of the nullable type otherwise we will assign the default value of that particular type</p>
+
+<pre><code class="language-csharp">    
+    DateTime? sourceValue = null;
+    DateTime destinationValue;
+    if (sourceValue.HasValue)
+    {
+        destinationValue = sourceValue.Value;   
+    }
+    else
+    {
+        destinationValue = default(DateTime);
+    }
+
+</code></pre>
+
+<p>The above code is very verbose and if we have to resort to writing this kind of code for every nullable type to value type conversion in our code it quickly starts to become cumbersome. <a href="https://msdn.microsoft.com/en-us/library/bb383977.aspx">Extension methods</a> have come to my rescue to be able to solve this issue in a more cleaner way. I have written an <a href="http://stackoverflow.com/questions/4928810/how-do-i-write-an-extension-method-for-a-generic-type-with-constraints-on-type-p">generic extension</a> method on Nullable<T> such that it will take the nullable value type and checks for HasValue. In case it has a value then the Value property will be returned. Otherwise, default value of that particular value type will be returned</p>
+
+<pre><code class="language-csharp">
+    public static class MyExtensions
+    {
+        // Generic extension method which checks for HasValue and based on that
+        // will return a value
+        public static T ToValueType&lt;T&gt;(this Nullable&lt;T&gt; inputValue) where T : struct
+        {
+            if (inputValue.HasValue)
+            {
+                return inputValue.Value;
+            }
+            return default(T);
+        }
+    }
+    
+    void Main()
+    {
+        //Extension method usage
+        DateTime? sourceValue = null;
+        DateTime destinationValue;
+        destinationValue = sourceValue.ToValueType();
+    
+        Console.WriteLine($&quot;Destination value for datetime is : {destinationValue} &quot;);
+        
+        int? sourceIntValue = 1;
+        int destinationIntValue;
+        destinationIntValue = sourceIntValue.ToValueType();
+        
+        Console.WriteLine($&quot;Destination value for datetime is : {destinationIntValue} &quot;);
+    }
+    
+    // Result is as follows
+    // Destination value for datetime is : 1/1/0001 12:00:00 AM 
+    // Destination value for datetime is : 1 
+
+</code></pre>
+
+	
+			
+
+			
+
+			<div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    
+        
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'usaipavan';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+			
+				<div class="paging">
+					<span class="paging-label">More Reading</span>
+					
+					<div class="paging-newer">
+						<span class="dark-red">Newer</span><span class="decorative-marker">//</span>
+						<a class="paging-link" href="https://usaipavan.github.io/The-mystery-around-dbentityentry-state/">The mystery around DbEntityEntry.State</a>
+		            </div>
+		            
+
+					
+					<div class="paging-older">
+						<span class="dark-red">Older</span><span class="decorative-marker">//</span>
+			            <a class="paging-link" href="https://usaipavan.github.io/Trim-extra-spaces-object-recursively/">Trim extra spaces in strings on objects recursively</a>
+		            </div>
+		            
+	            </div>
+            
+          </section>
+          
+          	<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'usaipavan';
+    var disqus_identifier = 'https:\/\/usaipavan.github.io\/Simpler-way-to-convert-nullable-type-to-value-type\/';
+    var disqus_title = 'Simpler way to convert Nullable type to Value type';
+    var disqus_url = 'https:\/\/usaipavan.github.io\/Simpler-way-to-convert-nullable-type-to-value-type\/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          
+        
+      <div class="footer">
+	<hr class="thin" />
+	<div class="pure-menu pure-menu-horizontal pure-menu-open">
+		<ul class="footer-menu">
+		
+		</ul>
+	</div>
+
+	<p>&copy; 2016. All rights reserved.</p>
+</div>
+    </div>
+  </div>
+	
+
+	
+
+  
+</body>
+</html>

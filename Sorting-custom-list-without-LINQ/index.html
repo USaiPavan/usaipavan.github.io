@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <title>
+    Sorting a custom list without LINQ // Sai Pavan&#39;s blog
+  </title>
+
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="author" content="Sai Pavan">
+<meta name="generator" content="Hugo 0.17" />
+
+  <meta property="og:title" content="Sorting a custom list without LINQ" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:url" content="https://usaipavan.github.io/Sorting-custom-list-without-LINQ/" />
+
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/base-min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/pure-min.css">
+  
+  
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/grids-responsive-min.css">
+  
+  
+
+  <link rel="stylesheet" href="https://usaipavan.github.io//css/redlounge.css">
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Proza+Libre:400,200,100,700,300,500,600,800" rel="stylesheet"> 
+  <link href='//fonts.googleapis.com/css?family=Raleway:400,200,100,700,300,500,600,800' rel='stylesheet' type='text/css'>
+  <link href='//fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic' rel='stylesheet' type='text/css'>
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://usaipavan.github.io/touch-icon-144-precomposed.png">  
+  <link rel="shortcut icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
+  <link rel="shortcut icon" type="image/png" href="favicon-16x16.png" sizes="16x16" />
+
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Sai Pavan&#39;s blog" />
+
+    
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/styles/tomorrow-night-bright.min.css">
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+
+  
+
+  
+
+  
+
+  
+</head>
+
+<body>
+	
+
+	<div id="layout" class="pure-g">
+    <div class="sidebar pure-u-1 pure-u-md-1-4">
+  <div class="header">
+    
+
+	
+
+    <h1 class="brand-title">Sai Pavan&#39;s blog</h1>
+    <h2 class="brand-tagline">My tryst with .net and software programming in general</h2>
+
+    <nav class="nav">
+      <ul class="nav-list">
+        <li class="nav-item"><span class="nav-item-separator">//</span><a href="https://usaipavan.github.io/">Home</a></li>
+        
+          <li class="nav-item"><span class="nav-item-separator">//</span><a href="https://usaipavan.github.io/list">Blog</a></li>
+        
+      </ul>
+    </nav>
+
+    
+    <div class="social-buttons">
+              
+        
+        <a href="https://www.linkedin.com/in/usaipavan" target="_blank"><i class='fa fa-linkedin fa-lg fa-fw'></i></a>
+        
+              
+        
+        <a href="https://www.linkedin.com/in/usaipavan" target="_blank"><i class='fa fa-rss fa-lg fa-fw'></i></a>
+        
+              
+        
+        <a href="https://twitter.com/usaipavan" target="_blank"><i class='fa fa-twitter fa-lg fa-fw'></i></a>
+        
+      
+      
+    </div>
+    
+
+  </div>
+</div>
+
+	
+	
+
+    <div class="content pure-u-1 pure-u-md-3-4">
+		<a name="top"></a>
+		
+
+		
+			
+	    
+  		<section class="post">
+            <h1 class="post-title">
+              <a href="https://usaipavan.github.io/Sorting-custom-list-without-LINQ/">Sorting a custom list without LINQ</a>
+            </h1>
+            <h3 class="post-subtitle">
+            	
+            </h3>
+            
+            	<span class="post-date">
+                	<span class="post-date-day"><sup>9</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Oct</span> <span class="post-date-year">2015</span>
+            	</span>
+            	
+            
+            	
+            		<span class="post-author-single">By <a class="post-author"  target="">Sai Pavan</a></span>
+            		
+
+
+
+
+            	
+            
+
+			
+			
+
+			
+
+			
+
+            <p>As much as we want to work on latest and greatest technologies sometimes we end up working on older technologies. This becomes especially tough when we have already worked on latest technologies. One such examples is LINQ.</p>
+
+<p>LINQ has made life of developers so easy that it feels wierd how we used to do stuff like filtering and other actions on collections without using LINQ. Recently I came across a scenario where I had to sort a custom type list based on varoius properties in it. However, I was working on .Net 2.0 and as we all know we didn&rsquo;t have LINQ back then. Hence I was stuck with using whatever was available in .Net 2.0</p>
+
+<p>There were quite a few options before me but I chose the simplest one which is using <em>Array.Sort()</em> method which is <em>aware</em> of sorting all the primitive data types. Luckily my custom type was made up of primitive data types</p>
+
+<p>So here is the code that I have written to be able to achieve that feat..</p>
+
+<p>First my custom type (obviously different from what I have worked on but is similar)</p>
+
+<pre><code class="language-csharp">class TrainingEmployee
+{
+    public int Count { get; set; }        
+    public string TrainingTypeName { get; set; }
+    public string LocationName { get; set; }
+    public string DueStatus { get; set; }
+    public string EmployeeNumber { get; set; }
+    public string EmployeeName { get; set; }                
+}
+</code></pre>
+
+<p>Now easier way to sort the custom type list</p>
+
+<pre><code class="language-csharp">public void BuildAndSortEmployees()
+{
+    List&lt;TrainingEmployee&gt; employees = new List&lt;TrainingEmployee&gt;();
+    employees.Add(new TrainingEmployee { Count = 10, DueStatus = &quot;Due&quot;, EmployeeName = &quot;Tom&quot;, EmployeeNumber = &quot;2&quot;, LocationName = &quot;Hogwarts&quot;, TrainingTypeName = &quot;bca&quot; });
+    employees.Add(new TrainingEmployee { Count = 5, DueStatus = &quot;Due&quot;, EmployeeName = &quot;Riddle&quot;, EmployeeNumber = &quot;12&quot;, LocationName = &quot;DiagonAlley&quot;, TrainingTypeName = &quot;bca&quot; });
+    employees.Add(new TrainingEmployee { Count = 8, DueStatus = &quot;Due&quot;, EmployeeName = &quot;Lord&quot;, EmployeeNumber = &quot;22&quot;, LocationName = &quot;PrivetDrive&quot;, TrainingTypeName = &quot;bca&quot; });
+    employees.Add(new TrainingEmployee { Count = 12, DueStatus = &quot;Due&quot;, EmployeeName = &quot;Voldemort&quot;, EmployeeNumber = &quot;8&quot;, LocationName = &quot;TestLocation&quot;, TrainingTypeName = &quot;bca&quot; });
+    
+    employees.Sort((x, y) =&gt; { var ret = x.EmployeeName.CompareTo(y.EmployeeName); return ret; });
+}
+</code></pre>
+
+<p>The <em>EmployeeName</em> property can be literally be replaced with any of the properties in the TrainingEmployee class and the sorty just works. Here we are using the Array.Sort and also using the <a href="https://msdn.microsoft.com/en-us/library/system.icomparable.compareto(v=vs.110).aspx">CompareTo</a> we are comparing the primitive data types. This won&rsquo;t work out of the box for custom data types, if any, in <em>TrainingEmployee</em> class but requires a EqualityComparer implementation of the custom data type</p>
+
+<p>That is it. It is a short post on how to do sorting of custom types without using LINQ</p>
+
+	
+			
+
+			
+
+			<div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    
+        
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'usaipavan';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+			
+				<div class="paging">
+					<span class="paging-label">More Reading</span>
+					
+					<div class="paging-newer">
+						<span class="dark-red">Newer</span><span class="decorative-marker">//</span>
+						<a class="paging-link" href="https://usaipavan.github.io/Trim-extra-spaces-object-recursively/">Trim extra spaces in strings on objects recursively</a>
+		            </div>
+		            
+
+					
+					<div class="paging-older">
+						<span class="dark-red">Older</span><span class="decorative-marker">//</span>
+			            <a class="paging-link" href="https://usaipavan.github.io/Practical-implementation-of-fix-for-XSS-vulnerability/">Practical implementation of fix for XSS vulnerability</a>
+		            </div>
+		            
+	            </div>
+            
+          </section>
+          
+          	<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'usaipavan';
+    var disqus_identifier = 'https:\/\/usaipavan.github.io\/Sorting-custom-list-without-LINQ\/';
+    var disqus_title = 'Sorting a custom list without LINQ';
+    var disqus_url = 'https:\/\/usaipavan.github.io\/Sorting-custom-list-without-LINQ\/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          
+        
+      <div class="footer">
+	<hr class="thin" />
+	<div class="pure-menu pure-menu-horizontal pure-menu-open">
+		<ul class="footer-menu">
+		
+		</ul>
+	</div>
+
+	<p>&copy; 2016. All rights reserved.</p>
+</div>
+    </div>
+  </div>
+	
+
+	
+
+  
+</body>
+</html>
