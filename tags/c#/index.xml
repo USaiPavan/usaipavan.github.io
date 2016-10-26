@@ -2,13 +2,12 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Sai Pavan&#39;s blog</title>
-    <link>https://usaipavan.github.io/index.xml</link>
+    <link>https://usaipavan.github.io/tags/c</link>
     <description>Recent content on Sai Pavan&#39;s blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>(c) 2016 Sai Pavan.</copyright>
-    <lastBuildDate>Wed, 06 Jul 2016 09:00:00 -0500</lastBuildDate>
-    <atom:link href="https://usaipavan.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://usaipavan.github.io/tags/c" rel="self" type="application/rss+xml" />
     
     <item>
       <title>The mystery around DbEntityEntry.State</title>
@@ -365,30 +364,6 @@ protected void Page_Load(object sender, EventArgs e)
 &lt;p&gt;Now, I had to somehow measure and I was using Debug.WriteLine method to log the details. First off I started with DateTime.Now, storing it in a variable and then after the processing was done subtracting it from the current DateTime (DateTime.Now) and taking the milliseconds elapsed in the resulting TimeSpan surprised me. I was sure that there was time consumption for that task but the output window was showing zero milliseconds. After couple of tries I resorted to StopWatch class. The usual Start and Stop methods before and after the task were now actually showing me the correct details. It was accurate to the Tick.&lt;/p&gt;
 
 &lt;p&gt;So my today’s learning, for accuracy and performance measurements depend only on StopWatch class :-). Might have learned it late but as the saying goes “Better late than never”. Hope it helps some one.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Aiming high</title>
-      <link>https://usaipavan.github.io/page/about/</link>
-      <pubDate>Mon, 02 Jan 2012 14:20:34 +0000</pubDate>
-      
-      <guid>https://usaipavan.github.io/page/about/</guid>
-      <description>&lt;p&gt;Test about me&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Aiming high</title>
-      <link>https://usaipavan.github.io/2012/01/aiming-high/</link>
-      <pubDate>Mon, 02 Jan 2012 14:20:34 +0000</pubDate>
-      
-      <guid>https://usaipavan.github.io/2012/01/aiming-high/</guid>
-      <description>&lt;p&gt;Hello World!!&lt;/p&gt;
-
-&lt;p&gt;Here is my first blog, rather I should say its one of the many of my registered blogs where I took a new year resolution to be active on. I am planning to post all my learning in the Software field on an immediate basis on this blog. Hope people will feel this blog useful.&lt;/p&gt;
-
-&lt;p&gt;To introduce myself, I am a .Net Developer working for an MNC and I have an experience of 3.5 years on .Net. My only aim for starting this blog is to document my learning in way that is useful for me as well as the developer community. I also have simple wishes which I would discuss when the time is right. Hoping that this new year fulfills my wishes.&lt;/p&gt;
 </description>
     </item>
     

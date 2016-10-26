@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Sai Pavan&#39;s blog</title>
+    <link>https://usaipavan.github.io/tags/linq/index.xml</link>
+    <description>Recent content on Sai Pavan&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>(c) 2016 Sai Pavan.</copyright>
+    <atom:link href="https://usaipavan.github.io/tags/linq/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Sorting a custom list without LINQ</title>
+      <link>https://usaipavan.github.io/2015/10/sorting-custom-list-without-linq/</link>
+      <pubDate>Fri, 09 Oct 2015 09:00:00 -0500</pubDate>
+      
+      <guid>https://usaipavan.github.io/2015/10/sorting-custom-list-without-linq/</guid>
+      <description>&lt;p&gt;As much as we want to work on latest and greatest technologies sometimes we end up working on older technologies. This becomes especially tough when we have already worked on latest technologies. One such examples is LINQ.&lt;/p&gt;
+
+&lt;p&gt;LINQ has made life of developers so easy that it feels wierd how we used to do stuff like filtering and other actions on collections without using LINQ. Recently I came across a scenario where I had to sort a custom type list based on varoius properties in it. However, I was working on .Net 2.0 and as we all know we didn&amp;rsquo;t have LINQ back then. Hence I was stuck with using whatever was available in .Net 2.0&lt;/p&gt;
+
+&lt;p&gt;There were quite a few options before me but I chose the simplest one which is using &lt;em&gt;Array.Sort()&lt;/em&gt; method which is &lt;em&gt;aware&lt;/em&gt; of sorting all the primitive data types. Luckily my custom type was made up of primitive data types&lt;/p&gt;
+
+&lt;p&gt;So here is the code that I have written to be able to achieve that feat..&lt;/p&gt;
+
+&lt;p&gt;First my custom type (obviously different from what I have worked on but is similar)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-csharp&#34;&gt;class TrainingEmployee
+{
+    public int Count { get; set; }        
+    public string TrainingTypeName { get; set; }
+    public string LocationName { get; set; }
+    public string DueStatus { get; set; }
+    public string EmployeeNumber { get; set; }
+    public string EmployeeName { get; set; }                
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Now easier way to sort the custom type list&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-csharp&#34;&gt;public void BuildAndSortEmployees()
+{
+    List&amp;lt;TrainingEmployee&amp;gt; employees = new List&amp;lt;TrainingEmployee&amp;gt;();
+    employees.Add(new TrainingEmployee { Count = 10, DueStatus = &amp;quot;Due&amp;quot;, EmployeeName = &amp;quot;Tom&amp;quot;, EmployeeNumber = &amp;quot;2&amp;quot;, LocationName = &amp;quot;Hogwarts&amp;quot;, TrainingTypeName = &amp;quot;bca&amp;quot; });
+    employees.Add(new TrainingEmployee { Count = 5, DueStatus = &amp;quot;Due&amp;quot;, EmployeeName = &amp;quot;Riddle&amp;quot;, EmployeeNumber = &amp;quot;12&amp;quot;, LocationName = &amp;quot;DiagonAlley&amp;quot;, TrainingTypeName = &amp;quot;bca&amp;quot; });
+    employees.Add(new TrainingEmployee { Count = 8, DueStatus = &amp;quot;Due&amp;quot;, EmployeeName = &amp;quot;Lord&amp;quot;, EmployeeNumber = &amp;quot;22&amp;quot;, LocationName = &amp;quot;PrivetDrive&amp;quot;, TrainingTypeName = &amp;quot;bca&amp;quot; });
+    employees.Add(new TrainingEmployee { Count = 12, DueStatus = &amp;quot;Due&amp;quot;, EmployeeName = &amp;quot;Voldemort&amp;quot;, EmployeeNumber = &amp;quot;8&amp;quot;, LocationName = &amp;quot;TestLocation&amp;quot;, TrainingTypeName = &amp;quot;bca&amp;quot; });
+    
+    employees.Sort((x, y) =&amp;gt; { var ret = x.EmployeeName.CompareTo(y.EmployeeName); return ret; });
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The &lt;em&gt;EmployeeName&lt;/em&gt; property can be literally be replaced with any of the properties in the TrainingEmployee class and the sorty just works. Here we are using the Array.Sort and also using the &lt;a href=&#34;https://msdn.microsoft.com/en-us/library/system.icomparable.compareto(v=vs.110).aspx&#34;&gt;CompareTo&lt;/a&gt; we are comparing the primitive data types. This won&amp;rsquo;t work out of the box for custom data types, if any, in &lt;em&gt;TrainingEmployee&lt;/em&gt; class but requires a EqualityComparer implementation of the custom data type&lt;/p&gt;
+
+&lt;p&gt;That is it. It is a short post on how to do sorting of custom types without using LINQ&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
