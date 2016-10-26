@@ -18,64 +18,55 @@
       <guid>https://usaipavan.github.io/2016/07/the-mystery-around-dbentityentry-state/</guid>
       <description>&lt;p&gt;While playing around with EF DbContext ChangeTracker API I happened to observe an interesting behavior of DbContext.Entry().State. I will be using AdventureWorks database with Code First from database for this blog post. Initially I have obtained a row using the Find method on the Addresses entity. Now I have called the Entry method on the DbContext to obtain the DbEntityEntry&amp;lt; Address &amp;gt; and accessed the State property on the same. As expected, the State was &amp;ldquo;Unchanged&amp;rdquo;. Now I have modified the AddressLine1 to add some dummy information and tried to get obtain the State again. Here is the code snippet&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-csharp&#34;&gt;
-        var localContext = new AdventureWorksModel();
-        var firstResult = localContext.Addresses.Find(10);
+&lt;pre&gt;&lt;code class=&#34;language-csharp&#34;&gt;var localContext = new AdventureWorksModel();
+var firstResult = localContext.Addresses.Find(10);
 
-        var entryDetails = localContext.Entry(firstResult);
-        Console.WriteLine(entryDetails.State);
+var entryDetails = localContext.Entry(firstResult);
+Console.WriteLine(entryDetails.State);
 
-        firstResult.AddressLine1 += &amp;quot;test&amp;quot;;
+firstResult.AddressLine1 += &amp;quot;test&amp;quot;;
 
-        Console.WriteLine(entryDetails.State);
-
+Console.WriteLine(entryDetails.State);
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;What do you think the result would have been?&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-csharp&#34;&gt;
-    Unchanged
-    Unchanged
-
+&lt;pre&gt;&lt;code class=&#34;language-csharp&#34;&gt;Unchanged
+Unchanged
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;My initial thoughts were since the call to Entry method was creating a new object there is no way this object would have any idea and all was good. However, I happened to call localContext.Entry(firstResult) and then tried to access entryDetails.State. Before I reveal the result. Here is the code. Give it a guess&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-csharp&#34;&gt;
-        var localContext = new AdventureWorksModel();
-        var firstResult = localContext.Addresses.Find(10);
+&lt;pre&gt;&lt;code class=&#34;language-csharp&#34;&gt;var localContext = new AdventureWorksModel();
+var firstResult = localContext.Addresses.Find(10);
 
-        var entryDetails = localContext.Entry(firstResult);
-        Console.WriteLine(entryDetails.State);
+var entryDetails = localContext.Entry(firstResult);
+Console.WriteLine(entryDetails.State);
 
-        firstResult.AddressLine1 += &amp;quot;test&amp;quot;;
-        
+firstResult.AddressLine1 += &amp;quot;test&amp;quot;;
 
-        Console.WriteLine(entryDetails.State);
-        Console.WriteLine(localContext.Entry(firstResult).State);
-        Console.WriteLine(entryDetails.State);
 
+Console.WriteLine(entryDetails.State);
+Console.WriteLine(localContext.Entry(firstResult).State);
+Console.WriteLine(entryDetails.State);
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Here is the result&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-csharp&#34;&gt;        
-    Unchanged
-    Unchanged
-    Modified
-    Modified
+&lt;pre&gt;&lt;code class=&#34;language-csharp&#34;&gt;Unchanged
+Unchanged
+Modified
+Modified
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Now this was a surprise for me, if both the instances were different then how come one affected the other. Were they the same? I confirmed that they weren&amp;rsquo;t&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-csharp&#34;&gt;
-        Console.WriteLine(localContext.Entry(firstResult) == entryDetails);
+&lt;pre&gt;&lt;code class=&#34;language-csharp&#34;&gt;Console.WriteLine(localContext.Entry(firstResult) == entryDetails);
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Result:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-csharp&#34;&gt;        
-    False
+&lt;pre&gt;&lt;code class=&#34;language-csharp&#34;&gt;False
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;It triggered my curiosity and I decided to dig into EntityFramework.dll to get my answers. I used dotPeek to be able to decompile the same&lt;/p&gt;
@@ -88,22 +79,22 @@
 
 &lt;p&gt;Also, by calling DetectChanges on the DbContext.ChangeTracker, we can ensure that the existing DbEntityEntry is updated&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-csharp&#34;&gt;        var localContext = new AdventureWorksModel();
-        var firstResult = localContext.Addresses.Find(10);
-    
-        var entryDetails = localContext.Entry(firstResult);
-        Console.WriteLine(entryDetails.State);
-    
-        firstResult.AddressLine1 += &amp;quot;test&amp;quot;;
-    
-        localContext.ChangeTracker.DetectChanges();
-        
-    
-        Console.WriteLine(entryDetails.State);
-        Console.WriteLine(localContext.Entry(firstResult).State);
-        Console.WriteLine(entryDetails.State);
-    
-        Console.WriteLine(localContext.Entry(firstResult) == entryDetails);
+&lt;pre&gt;&lt;code class=&#34;language-csharp&#34;&gt;var localContext = new AdventureWorksModel();
+var firstResult = localContext.Addresses.Find(10);
+
+var entryDetails = localContext.Entry(firstResult);
+Console.WriteLine(entryDetails.State);
+
+firstResult.AddressLine1 += &amp;quot;test&amp;quot;;
+
+localContext.ChangeTracker.DetectChanges();
+
+
+Console.WriteLine(entryDetails.State);
+Console.WriteLine(localContext.Entry(firstResult).State);
+Console.WriteLine(entryDetails.State);
+
+Console.WriteLine(localContext.Entry(firstResult) == entryDetails);
 &lt;/code&gt;&lt;/pre&gt;
 </description>
     </item>
@@ -118,67 +109,62 @@
 
 &lt;p&gt;Now when these values have to be converted from Nullable value types to normal C# value types we have to be careful in not running into InvalidOperationException&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-csharp&#34;&gt;
-    // Following line of code throws a InvalidOperationException
-    // with message as
-    // Nullable object must have a value.
-    DateTime? sourceValue = null;
-    DateTime destinationValue = sourceValue.Value;
-
+&lt;pre&gt;&lt;code class=&#34;language-csharp&#34;&gt;// Following line of code throws a InvalidOperationException
+// with message as
+// Nullable object must have a value.
+DateTime? sourceValue = null;
+DateTime destinationValue = sourceValue.Value;
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;In order to be able to avoid such an issue we must then resort to a HasValue check and when the value exists it will have to be assigned by calling the Value property of the nullable type otherwise we will assign the default value of that particular type&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-csharp&#34;&gt;    
-    DateTime? sourceValue = null;
-    DateTime destinationValue;
-    if (sourceValue.HasValue)
-    {
-        destinationValue = sourceValue.Value;   
-    }
-    else
-    {
-        destinationValue = default(DateTime);
-    }
-
+&lt;pre&gt;&lt;code class=&#34;language-csharp&#34;&gt;DateTime? sourceValue = null;
+DateTime destinationValue;
+if (sourceValue.HasValue)
+{
+    destinationValue = sourceValue.Value;   
+}
+else
+{
+    destinationValue = default(DateTime);
+}
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;The above code is very verbose and if we have to resort to writing this kind of code for every nullable type to value type conversion in our code it quickly starts to become cumbersome. &lt;a href=&#34;https://msdn.microsoft.com/en-us/library/bb383977.aspx&#34;&gt;Extension methods&lt;/a&gt; have come to my rescue to be able to solve this issue in a more cleaner way. I have written an &lt;a href=&#34;http://stackoverflow.com/questions/4928810/how-do-i-write-an-extension-method-for-a-generic-type-with-constraints-on-type-p&#34;&gt;generic extension&lt;/a&gt; method on Nullable&lt;T&gt; such that it will take the nullable value type and checks for HasValue. In case it has a value then the Value property will be returned. Otherwise, default value of that particular value type will be returned&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-csharp&#34;&gt;
-    public static class MyExtensions
+&lt;pre&gt;&lt;code class=&#34;language-csharp&#34;&gt;public static class MyExtensions
+{
+    // Generic extension method which checks for HasValue and based on that
+    // will return a value
+    public static T ToValueType&amp;lt;T&amp;gt;(this Nullable&amp;lt;T&amp;gt; inputValue) where T : struct
     {
-        // Generic extension method which checks for HasValue and based on that
-        // will return a value
-        public static T ToValueType&amp;lt;T&amp;gt;(this Nullable&amp;lt;T&amp;gt; inputValue) where T : struct
+        if (inputValue.HasValue)
         {
-            if (inputValue.HasValue)
-            {
-                return inputValue.Value;
-            }
-            return default(T);
+            return inputValue.Value;
         }
+        return default(T);
     }
+}
+
+void Main()
+{
+    //Extension method usage
+    DateTime? sourceValue = null;
+    DateTime destinationValue;
+    destinationValue = sourceValue.ToValueType();
+
+    Console.WriteLine($&amp;quot;Destination value for datetime is : {destinationValue} &amp;quot;);
     
-    void Main()
-    {
-        //Extension method usage
-        DateTime? sourceValue = null;
-        DateTime destinationValue;
-        destinationValue = sourceValue.ToValueType();
+    int? sourceIntValue = 1;
+    int destinationIntValue;
+    destinationIntValue = sourceIntValue.ToValueType();
     
-        Console.WriteLine($&amp;quot;Destination value for datetime is : {destinationValue} &amp;quot;);
-        
-        int? sourceIntValue = 1;
-        int destinationIntValue;
-        destinationIntValue = sourceIntValue.ToValueType();
-        
-        Console.WriteLine($&amp;quot;Destination value for datetime is : {destinationIntValue} &amp;quot;);
-    }
-    
-    // Result is as follows
-    // Destination value for datetime is : 1/1/0001 12:00:00 AM 
-    // Destination value for datetime is : 1 
+    Console.WriteLine($&amp;quot;Destination value for datetime is : {destinationIntValue} &amp;quot;);
+}
+
+// Result is as follows
+// Destination value for datetime is : 1/1/0001 12:00:00 AM 
+// Destination value for datetime is : 1 
 
 &lt;/code&gt;&lt;/pre&gt;
 </description>
@@ -196,46 +182,42 @@
 
 &lt;p&gt;I have created an extension method on object which handles a generic parameter. As a first step I have first trimmed all the strings at the object level. I have done this using reflection and link where we will identify all the strings and just trim the spaces on them which is symbol.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-csharp&#34;&gt;
-    //Iterates all properties and trims the values if they are strings
-    var properties = obj.GetType().GetProperties(BindingFlags.Instance |    BindingFlags.Public)
-        .Where(prop =&amp;gt; prop.PropertyType == typeof(string))
-        .Where(prop =&amp;gt; prop.CanWrite &amp;amp;&amp;amp; prop.CanRead);
-    
-    foreach (var property in properties)
-    {
-        var value = (string) property.GetValue(obj, null);
-        if (value.HasValue())
-        {
-        var newValue = (object) value.Trim();
-        property.SetValue(obj, newValue, null);
-        }
-    }
+&lt;pre&gt;&lt;code class=&#34;language-csharp&#34;&gt;//Iterates all properties and trims the values if they are strings
+var properties = obj.GetType().GetProperties(BindingFlags.Instance |    BindingFlags.Public)
+    .Where(prop =&amp;gt; prop.PropertyType == typeof(string))
+    .Where(prop =&amp;gt; prop.CanWrite &amp;amp;&amp;amp; prop.CanRead);
 
+foreach (var property in properties)
+{
+    var value = (string) property.GetValue(obj, null);
+    if (value.HasValue())
+    {
+    var newValue = (object) value.Trim();
+    property.SetValue(obj, newValue, null);
+    }
+}
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;As a next step I tried to take care of all the list of objects so that they can each be operated individually and spaces can be trimmed on them. To be able to achieve this I have relied on recursion.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-csharp&#34;&gt;
-    // This is to take care of Lists. This iterates through each value
-    // in the list.
-    // For example, Countries which is a List&amp;lt;Country&amp;gt;
-    var baseTypeInfo = obj.GetType().BaseType;
-    if (baseTypeInfo != null &amp;amp;&amp;amp; baseTypeInfo.FullName.Contains(&amp;quot;List&amp;quot;))
+&lt;pre&gt;&lt;code class=&#34;language-csharp&#34;&gt;// This is to take care of Lists. This iterates through each value
+// in the list.
+// For example, Countries which is a List&amp;lt;Country&amp;gt;
+var baseTypeInfo = obj.GetType().BaseType;
+if (baseTypeInfo != null &amp;amp;&amp;amp; baseTypeInfo.FullName.Contains(&amp;quot;List&amp;quot;))
+{
+    var listCount = (int) obj.GetType().GetProperty(&amp;quot;Count&amp;quot;).GetValue(obj, null);
+    for (var innerIndex = 0; innerIndex &amp;lt; listCount; innerIndex++)
     {
-        var listCount = (int) obj.GetType().GetProperty(&amp;quot;Count&amp;quot;).GetValue(obj, null);
-        for (var innerIndex = 0; innerIndex &amp;lt; listCount; innerIndex++)
-        {
-            var item = obj.GetType().GetMethod(&amp;quot;get_Item&amp;quot;, new[] {typeof(int)}).Invoke(obj, new object[] {innerIndex});
-            item.TrimSpaces(); // Recursive call
-        }
+        var item = obj.GetType().GetMethod(&amp;quot;get_Item&amp;quot;, new[] {typeof(int)}).Invoke(obj, new object[] {innerIndex});
+        item.TrimSpaces(); // Recursive call
     }
-
+}
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Now as the last step I have taken care of other custom objects inside the object so that  also be taken care of item in the spaces.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;    // Now once we are in a complex type (for example Country) it then needs to
+&lt;pre&gt;&lt;code class=&#34;language-csharp&#34;&gt;    // Now once we are in a complex type (for example Country) it then needs to
     // be trimmed recursively using the initial peice of code of this method
     // Hence if it is a complex type we are recursively calling TrimSpaces
     var customTypes =
@@ -286,16 +268,52 @@
 &lt;pre&gt;&lt;code class=&#34;language-csharp&#34;&gt;public void BuildAndSortEmployees()
 {
     List&amp;lt;TrainingEmployee&amp;gt; employees = new List&amp;lt;TrainingEmployee&amp;gt;();
-    employees.Add(new TrainingEmployee { Count = 10, DueStatus = &amp;quot;Due&amp;quot;, EmployeeName = &amp;quot;Tom&amp;quot;, EmployeeNumber = &amp;quot;2&amp;quot;, LocationName = &amp;quot;Hogwarts&amp;quot;, TrainingTypeName = &amp;quot;bca&amp;quot; });
-    employees.Add(new TrainingEmployee { Count = 5, DueStatus = &amp;quot;Due&amp;quot;, EmployeeName = &amp;quot;Riddle&amp;quot;, EmployeeNumber = &amp;quot;12&amp;quot;, LocationName = &amp;quot;DiagonAlley&amp;quot;, TrainingTypeName = &amp;quot;bca&amp;quot; });
-    employees.Add(new TrainingEmployee { Count = 8, DueStatus = &amp;quot;Due&amp;quot;, EmployeeName = &amp;quot;Lord&amp;quot;, EmployeeNumber = &amp;quot;22&amp;quot;, LocationName = &amp;quot;PrivetDrive&amp;quot;, TrainingTypeName = &amp;quot;bca&amp;quot; });
-    employees.Add(new TrainingEmployee { Count = 12, DueStatus = &amp;quot;Due&amp;quot;, EmployeeName = &amp;quot;Voldemort&amp;quot;, EmployeeNumber = &amp;quot;8&amp;quot;, LocationName = &amp;quot;TestLocation&amp;quot;, TrainingTypeName = &amp;quot;bca&amp;quot; });
-    
-    employees.Sort((x, y) =&amp;gt; { var ret = x.EmployeeName.CompareTo(y.EmployeeName); return ret; });
+    employees.Add(new TrainingEmployee
+    {
+        Count = 10,
+        DueStatus = &amp;quot;Due&amp;quot;,
+        EmployeeName = &amp;quot;Tom&amp;quot;,
+        EmployeeNumber = &amp;quot;2&amp;quot;,
+        LocationName = &amp;quot;Hogwarts&amp;quot;,
+        TrainingTypeName = &amp;quot;bca&amp;quot;
+    });
+    employees.Add(new TrainingEmployee
+    {
+        Count = 5,
+        DueStatus = &amp;quot;Due&amp;quot;,
+        EmployeeName = &amp;quot;Riddle&amp;quot;,
+        EmployeeNumber = &amp;quot;12&amp;quot;,
+        LocationName = &amp;quot;DiagonAlley&amp;quot;,
+        TrainingTypeName = &amp;quot;bca&amp;quot;
+    });
+    employees.Add(new TrainingEmployee
+    {
+        Count = 8,
+        DueStatus = &amp;quot;Due&amp;quot;,
+        EmployeeName = &amp;quot;Lord&amp;quot;,
+        EmployeeNumber = &amp;quot;22&amp;quot;,
+        LocationName = &amp;quot;PrivetDrive&amp;quot;,
+        TrainingTypeName = &amp;quot;bca&amp;quot;
+    });
+    employees.Add(new TrainingEmployee
+    {
+        Count = 12,
+        DueStatus = &amp;quot;Due&amp;quot;,
+        EmployeeName = &amp;quot;Voldemort&amp;quot;,
+        EmployeeNumber = &amp;quot;8&amp;quot;,
+        LocationName = &amp;quot;TestLocation&amp;quot;,
+        TrainingTypeName = &amp;quot;bca&amp;quot;
+    });
+
+    employees.Sort((x, y) =&amp;gt;
+    {
+        var ret = x.EmployeeName.CompareTo(y.EmployeeName);
+        return ret;
+    });
 }
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;The &lt;em&gt;EmployeeName&lt;/em&gt; property can be literally be replaced with any of the properties in the TrainingEmployee class and the sorty just works. Here we are using the Array.Sort and also using the &lt;a href=&#34;https://msdn.microsoft.com/en-us/library/system.icomparable.compareto(v=vs.110).aspx&#34;&gt;CompareTo&lt;/a&gt; we are comparing the primitive data types. This won&amp;rsquo;t work out of the box for custom data types, if any, in &lt;em&gt;TrainingEmployee&lt;/em&gt; class but requires a EqualityComparer implementation of the custom data type&lt;/p&gt;
+&lt;p&gt;The &lt;em&gt;EmployeeName&lt;/em&gt; property can be literally be replaced with any of the properties in the TrainingEmployee class and the sort just works. Here we are using the Array.Sort and also using the &lt;a href=&#34;https://msdn.microsoft.com/en-us/library/system.icomparable.compareto(v=vs.110).aspx&#34;&gt;CompareTo&lt;/a&gt; we are comparing the primitive data types. This won&amp;rsquo;t work out of the box for custom data types, if any, in &lt;em&gt;TrainingEmployee&lt;/em&gt; class but requires a EqualityComparer implementation of the custom data type&lt;/p&gt;
 
 &lt;p&gt;That is it. It is a short post on how to do sorting of custom types without using LINQ&lt;/p&gt;
 </description>
@@ -321,8 +339,7 @@
 
 &lt;p&gt;Thus by setting ValidateRequest as false in Page directive and then calling this method in Page load we would gain control over the ASP.NET validation. Now we can call the Page.Validate() to trigger server side validation and if page is invalid simply return to the end-user suggesting the problem with their input. In a scenario where our validation fails as a next line of defense we would access the collections of forms, query string and cookies so that since ValidateInput has already set the flags accessing any one of the above which are having an issue will raise an exception. Thus, we can ensure that Server side validation is done while not compromising on ASP.NET built-in validation. Here is the sample code for the same.&lt;/p&gt;
 
-&lt;pre&gt;&lt;code class=&#34;language-csharp&#34;&gt;
-protected void Page_Load(object sender, EventArgs e)
+&lt;pre&gt;&lt;code class=&#34;language-csharp&#34;&gt;protected void Page_Load(object sender, EventArgs e)
 {
     try {
         if (Page.IsPostBack)
@@ -345,7 +362,6 @@ protected void Page_Load(object sender, EventArgs e)
         Response.Redirect(&amp;quot;MaliciousInputError.html&amp;quot;);
     }
 }
-
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Also, I have seen developers who just started their career in .net worrying about the return statement in the Page_Load event. I want to clarify here that with the return statement we only come out from page load event, rest of the page lifecycle will be intact.&lt;/p&gt;
@@ -369,16 +385,6 @@ protected void Page_Load(object sender, EventArgs e)
     </item>
     
     <item>
-      <title>About</title>
-      <link>https://usaipavan.github.io/about/_index/</link>
-      <pubDate>Mon, 02 Jan 2012 14:20:34 +0000</pubDate>
-      
-      <guid>https://usaipavan.github.io/about/_index/</guid>
-      <description>&lt;p&gt;Test about me&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
       <title>Aiming high</title>
       <link>https://usaipavan.github.io/2012/01/aiming-high/</link>
       <pubDate>Mon, 02 Jan 2012 14:20:34 +0000</pubDate>
@@ -389,6 +395,20 @@ protected void Page_Load(object sender, EventArgs e)
 &lt;p&gt;Here is my first blog, rather I should say its one of the many of my registered blogs where I took a new year resolution to be active on. I am planning to post all my learning in the Software field on an immediate basis on this blog. Hope people will feel this blog useful.&lt;/p&gt;
 
 &lt;p&gt;To introduce myself, I am a .Net Developer working for an MNC and I have an experience of 3.5 years on .Net. My only aim for starting this blog is to document my learning in way that is useful for me as well as the developer community. I also have simple wishes which I would discuss when the time is right. Hoping that this new year fulfills my wishes.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://usaipavan.github.io/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://usaipavan.github.io/about/</guid>
+      <description>
+
+&lt;h1 id=&#34;about-me&#34;&gt;About Me&lt;/h1&gt;
+
+&lt;p&gt;Hey, I&amp;rsquo;m Sai Pavan, a software programming enthusiast with experience in .Net programming. I started my career getting trained on .Net at Infosys Technologies. Later moved on to work at JP Morgan Chase, Infospan Technologies. All the views, content and opinions in my blog are my own and not those of my employer.&lt;/p&gt;
 </description>
     </item>
     

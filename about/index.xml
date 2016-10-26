@@ -7,16 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>(c) 2016 Sai Pavan.</copyright>
-    <lastBuildDate>Mon, 02 Jan 2012 14:20:34 +0000</lastBuildDate>
     <atom:link href="https://usaipavan.github.io/about/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
-      <title>About</title>
-      <link>https://usaipavan.github.io/about/_index/</link>
-      <pubDate>Mon, 02 Jan 2012 14:20:34 +0000</pubDate>
+      <title></title>
+      <link>https://usaipavan.github.io/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://usaipavan.github.io/about/_index/</guid>
-      <description>&lt;p&gt;Test about me&lt;/p&gt;
+      <guid>https://usaipavan.github.io/about/</guid>
+      <description>
+
+&lt;h1 id=&#34;about-me&#34;&gt;About Me&lt;/h1&gt;
+
+&lt;p&gt;Hey, I&amp;rsquo;m Sai Pavan, a software programming enthusiast with experience in .Net programming. I started my career getting trained on .Net at Infosys Technologies. Later moved on to work at JP Morgan Chase, Infospan Technologies. All the views, content and opinions in my blog are my own and not those of my employer.&lt;/p&gt;
 </description>
     </item>
     

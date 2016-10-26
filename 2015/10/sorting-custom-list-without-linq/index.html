@@ -33,13 +33,14 @@
   
 
   <link rel="stylesheet" href="https://usaipavan.github.io//css/redlounge.css">
+  <link rel="stylesheet" href="https://usaipavan.github.io/css/bootswatch/default/bootstrap.min.css">
   <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Proza+Libre:400,200,100,700,300,500,600,800" rel="stylesheet"> 
   <link href='//fonts.googleapis.com/css?family=Raleway:400,200,100,700,300,500,600,800' rel='stylesheet' type='text/css'>
   <link href='//fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic' rel='stylesheet' type='text/css'>
 
   
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://usaipavan.github.io/touch-icon-144-precomposed.png">  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://usaipavan.github.io/favicon-32x32.png">  
   <link rel="shortcut icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
   <link rel="shortcut icon" type="image/png" href="favicon-16x16.png" sizes="16x16" />
 
@@ -174,16 +175,52 @@
 <pre><code class="language-csharp">public void BuildAndSortEmployees()
 {
     List&lt;TrainingEmployee&gt; employees = new List&lt;TrainingEmployee&gt;();
-    employees.Add(new TrainingEmployee { Count = 10, DueStatus = &quot;Due&quot;, EmployeeName = &quot;Tom&quot;, EmployeeNumber = &quot;2&quot;, LocationName = &quot;Hogwarts&quot;, TrainingTypeName = &quot;bca&quot; });
-    employees.Add(new TrainingEmployee { Count = 5, DueStatus = &quot;Due&quot;, EmployeeName = &quot;Riddle&quot;, EmployeeNumber = &quot;12&quot;, LocationName = &quot;DiagonAlley&quot;, TrainingTypeName = &quot;bca&quot; });
-    employees.Add(new TrainingEmployee { Count = 8, DueStatus = &quot;Due&quot;, EmployeeName = &quot;Lord&quot;, EmployeeNumber = &quot;22&quot;, LocationName = &quot;PrivetDrive&quot;, TrainingTypeName = &quot;bca&quot; });
-    employees.Add(new TrainingEmployee { Count = 12, DueStatus = &quot;Due&quot;, EmployeeName = &quot;Voldemort&quot;, EmployeeNumber = &quot;8&quot;, LocationName = &quot;TestLocation&quot;, TrainingTypeName = &quot;bca&quot; });
-    
-    employees.Sort((x, y) =&gt; { var ret = x.EmployeeName.CompareTo(y.EmployeeName); return ret; });
+    employees.Add(new TrainingEmployee
+    {
+        Count = 10,
+        DueStatus = &quot;Due&quot;,
+        EmployeeName = &quot;Tom&quot;,
+        EmployeeNumber = &quot;2&quot;,
+        LocationName = &quot;Hogwarts&quot;,
+        TrainingTypeName = &quot;bca&quot;
+    });
+    employees.Add(new TrainingEmployee
+    {
+        Count = 5,
+        DueStatus = &quot;Due&quot;,
+        EmployeeName = &quot;Riddle&quot;,
+        EmployeeNumber = &quot;12&quot;,
+        LocationName = &quot;DiagonAlley&quot;,
+        TrainingTypeName = &quot;bca&quot;
+    });
+    employees.Add(new TrainingEmployee
+    {
+        Count = 8,
+        DueStatus = &quot;Due&quot;,
+        EmployeeName = &quot;Lord&quot;,
+        EmployeeNumber = &quot;22&quot;,
+        LocationName = &quot;PrivetDrive&quot;,
+        TrainingTypeName = &quot;bca&quot;
+    });
+    employees.Add(new TrainingEmployee
+    {
+        Count = 12,
+        DueStatus = &quot;Due&quot;,
+        EmployeeName = &quot;Voldemort&quot;,
+        EmployeeNumber = &quot;8&quot;,
+        LocationName = &quot;TestLocation&quot;,
+        TrainingTypeName = &quot;bca&quot;
+    });
+
+    employees.Sort((x, y) =&gt;
+    {
+        var ret = x.EmployeeName.CompareTo(y.EmployeeName);
+        return ret;
+    });
 }
 </code></pre>
 
-<p>The <em>EmployeeName</em> property can be literally be replaced with any of the properties in the TrainingEmployee class and the sorty just works. Here we are using the Array.Sort and also using the <a href="https://msdn.microsoft.com/en-us/library/system.icomparable.compareto(v=vs.110).aspx">CompareTo</a> we are comparing the primitive data types. This won&rsquo;t work out of the box for custom data types, if any, in <em>TrainingEmployee</em> class but requires a EqualityComparer implementation of the custom data type</p>
+<p>The <em>EmployeeName</em> property can be literally be replaced with any of the properties in the TrainingEmployee class and the sort just works. Here we are using the Array.Sort and also using the <a href="https://msdn.microsoft.com/en-us/library/system.icomparable.compareto(v=vs.110).aspx">CompareTo</a> we are comparing the primitive data types. This won&rsquo;t work out of the box for custom data types, if any, in <em>TrainingEmployee</em> class but requires a EqualityComparer implementation of the custom data type</p>
 
 <p>That is it. It is a short post on how to do sorting of custom types without using LINQ</p>
 
@@ -210,10 +247,12 @@
     
         
 
+    var doc = document;
     var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
     var disqus_shortname = 'usaipavan';
     dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    dsq.setAttribute('data-timestamp', +new Date());
+	(doc.head || doc.body).appendChild(dsq);    
 })();
 </script>
 <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>

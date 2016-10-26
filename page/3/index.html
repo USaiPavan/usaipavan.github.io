@@ -119,13 +119,53 @@
                 <header class="post-header">
                     
                     <h1 class="post-title">
-                      <a href="https://usaipavan.github.io/2016/07/the-mystery-around-dbentityentry-state/">The mystery around DbEntityEntry.State</a>
+                      <a href="https://usaipavan.github.io/2012/01/practical-implementation-of-fix-for-xss-vulnerability/">Practical implementation of fix for XSS vulnerability</a>
                   </h1>
               </header>
               <p class="post-meta">
                   
                   <span class="post-date">
-                    <span class="post-date-day"><sup>6</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Jul</span> <span class="post-date-year">2016</span>
+                    <span class="post-date-day"><sup>5</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Jan</span> <span class="post-date-year">2012</span>
+                </span>
+                
+                
+                    By <a class="post-author" >Sai Pavan</a>
+                
+                
+                    <span class="post-reading-time"><i class="fa fa-clock-o"></i> <em>20 min. read</em></span>
+                
+                       
+                    <br />           
+                    <span class="dark-red">Tags</span><span class="decorative-marker">//</span>
+                    
+                            <a class="post-tag post-tag-c" href="https://usaipavan.github.io//tags/c#" style="padding-right: 0.25em;font-size: 0.85rem;">C#</a>
+                    
+                            <a class="post-tag post-tag-security" href="https://usaipavan.github.io//tags/security#" style="padding-right: 0.25em;font-size: 0.85rem;">Security</a>
+                                      
+                
+                
+            </p>
+            
+              <article class="post-summary">
+                  In this post, I am going to discuss about the practical way of fixing the XSS vulnerability in ASP.NET applications. An introduction about XSS vulnerability can be found here. So, why I chose to write this blog post. I happened to see quite a few blog posts and sites which discuss about fixing the XSS vulnerability by constraining the input and encoding the output. But, I felt that there is a gap between practical implementation of the suggestion and what is written in the web sites.
+              </article>
+              <div class="read-more-link">
+                  <a href="https://usaipavan.github.io/2012/01/practical-implementation-of-fix-for-xss-vulnerability/"><span class="read-more-slashes">//</span>Read More...</a>
+              </div>
+            
+          </section>
+            
+            <section  class="post">
+                <header class="post-header">
+                    
+                    <h1 class="post-title">
+                      <a href="https://usaipavan.github.io/2012/01/datetime-vs-stopwatch/">DateTime vs. StopWatch</a>
+                  </h1>
+              </header>
+              <p class="post-meta">
+                  
+                  <span class="post-date">
+                    <span class="post-date-day"><sup>3</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Jan</span> <span class="post-date-year">2012</span>
                 </span>
                 
                 
@@ -139,64 +179,28 @@
                     <span class="dark-red">Tags</span><span class="decorative-marker">//</span>
                     
                             <a class="post-tag post-tag-c" href="https://usaipavan.github.io//tags/c#" style="padding-right: 0.25em;font-size: 0.85rem;">C#</a>
-                    
-                            <a class="post-tag post-tag-entity-framework" href="https://usaipavan.github.io//tags/entity-framework#" style="padding-right: 0.25em;font-size: 0.85rem;">Entity Framework</a>
                                       
                 
                 
             </p>
             
               <article class="post-summary">
-                  While playing around with EF DbContext ChangeTracker API I happened to observe an interesting behavior of DbContext.Entry().State. I will be using AdventureWorks database with Code First from database for this blog post. Initially I have obtained a row using the Find method on the Addresses entity. Now I have called the Entry method on the DbContext to obtain the DbEntityEntry&lt; Address &gt; and accessed the State property on the same. As expected, the State was &ldquo;Unchanged&rdquo;.
+                  Today I was trying to measure performance of an extension method that I have written on a DataSet. Basically, the extension method loops through all the DataTables. On each DataTable it iterates through all the rows (including the column names) and encodes all the strings using the HttpUtility.HtmlEncode method. This is to make sure that we are protecting our site from XSS attack (more about prevention of XSS attacks in ASP.
               </article>
               <div class="read-more-link">
-                  <a href="https://usaipavan.github.io/2016/07/the-mystery-around-dbentityentry-state/"><span class="read-more-slashes">//</span>Read More...</a>
-              </div>
-            
-          </section>
-            
-            <section  class="post">
-                <header class="post-header">
-                    
-                    <h1 class="post-title">
-                      <a href="https://usaipavan.github.io/2016/03/simpler-way-to-convert-nullable-type-to-value-type/">Simpler way to convert Nullable type to Value type</a>
-                  </h1>
-              </header>
-              <p class="post-meta">
-                  
-                  <span class="post-date">
-                    <span class="post-date-day"><sup>18</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Mar</span> <span class="post-date-year">2016</span>
-                </span>
-                
-                
-                    By <a class="post-author" >Sai Pavan</a>
-                
-                
-                    <span class="post-reading-time"><i class="fa fa-clock-o"></i> <em>15 min. read</em></span>
-                
-                       
-                    <br />           
-                    <span class="dark-red">Tags</span><span class="decorative-marker">//</span>
-                    
-                            <a class="post-tag post-tag-c" href="https://usaipavan.github.io//tags/c#" style="padding-right: 0.25em;font-size: 0.85rem;">C#</a>
-                                      
-                
-                
-            </p>
-            
-              <article class="post-summary">
-                  The more we work with databases, more is the need for nullable types. This is because of the inherent difference between the way value types are treated in object oriented world and the relational world. In the object oriented world the value types always have a value either the one that we assign or the one that is the default value. However, in the database world they are treated differently. They are assigned as a data type for a column and it is possible that the column has a value of the column could have NULL (obviously, not in case of NOT NULL columns).
-              </article>
-              <div class="read-more-link">
-                  <a href="https://usaipavan.github.io/2016/03/simpler-way-to-convert-nullable-type-to-value-type/"><span class="read-more-slashes">//</span>Read More...</a>
+                  <a href="https://usaipavan.github.io/2012/01/datetime-vs-stopwatch/"><span class="read-more-slashes">//</span>Read More...</a>
               </div>
             
           </section>
           
         </div>        
         
+            <a class="btn btn-default pad-button" href="https://usaipavan.github.io/page/2/">
+                &lt; Previous
+            </a>
         
-            <a class="btn btn-default pad-button" href="https://usaipavan.github.io/page/2/" style="float: right">
+        
+            <a class="btn btn-default pad-button" href="https://usaipavan.github.io/page/4/" style="float: right">
                 Next >
             </a>
         

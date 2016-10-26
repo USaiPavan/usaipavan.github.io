@@ -41,16 +41,52 @@
 &lt;pre&gt;&lt;code class=&#34;language-csharp&#34;&gt;public void BuildAndSortEmployees()
 {
     List&amp;lt;TrainingEmployee&amp;gt; employees = new List&amp;lt;TrainingEmployee&amp;gt;();
-    employees.Add(new TrainingEmployee { Count = 10, DueStatus = &amp;quot;Due&amp;quot;, EmployeeName = &amp;quot;Tom&amp;quot;, EmployeeNumber = &amp;quot;2&amp;quot;, LocationName = &amp;quot;Hogwarts&amp;quot;, TrainingTypeName = &amp;quot;bca&amp;quot; });
-    employees.Add(new TrainingEmployee { Count = 5, DueStatus = &amp;quot;Due&amp;quot;, EmployeeName = &amp;quot;Riddle&amp;quot;, EmployeeNumber = &amp;quot;12&amp;quot;, LocationName = &amp;quot;DiagonAlley&amp;quot;, TrainingTypeName = &amp;quot;bca&amp;quot; });
-    employees.Add(new TrainingEmployee { Count = 8, DueStatus = &amp;quot;Due&amp;quot;, EmployeeName = &amp;quot;Lord&amp;quot;, EmployeeNumber = &amp;quot;22&amp;quot;, LocationName = &amp;quot;PrivetDrive&amp;quot;, TrainingTypeName = &amp;quot;bca&amp;quot; });
-    employees.Add(new TrainingEmployee { Count = 12, DueStatus = &amp;quot;Due&amp;quot;, EmployeeName = &amp;quot;Voldemort&amp;quot;, EmployeeNumber = &amp;quot;8&amp;quot;, LocationName = &amp;quot;TestLocation&amp;quot;, TrainingTypeName = &amp;quot;bca&amp;quot; });
-    
-    employees.Sort((x, y) =&amp;gt; { var ret = x.EmployeeName.CompareTo(y.EmployeeName); return ret; });
+    employees.Add(new TrainingEmployee
+    {
+        Count = 10,
+        DueStatus = &amp;quot;Due&amp;quot;,
+        EmployeeName = &amp;quot;Tom&amp;quot;,
+        EmployeeNumber = &amp;quot;2&amp;quot;,
+        LocationName = &amp;quot;Hogwarts&amp;quot;,
+        TrainingTypeName = &amp;quot;bca&amp;quot;
+    });
+    employees.Add(new TrainingEmployee
+    {
+        Count = 5,
+        DueStatus = &amp;quot;Due&amp;quot;,
+        EmployeeName = &amp;quot;Riddle&amp;quot;,
+        EmployeeNumber = &amp;quot;12&amp;quot;,
+        LocationName = &amp;quot;DiagonAlley&amp;quot;,
+        TrainingTypeName = &amp;quot;bca&amp;quot;
+    });
+    employees.Add(new TrainingEmployee
+    {
+        Count = 8,
+        DueStatus = &amp;quot;Due&amp;quot;,
+        EmployeeName = &amp;quot;Lord&amp;quot;,
+        EmployeeNumber = &amp;quot;22&amp;quot;,
+        LocationName = &amp;quot;PrivetDrive&amp;quot;,
+        TrainingTypeName = &amp;quot;bca&amp;quot;
+    });
+    employees.Add(new TrainingEmployee
+    {
+        Count = 12,
+        DueStatus = &amp;quot;Due&amp;quot;,
+        EmployeeName = &amp;quot;Voldemort&amp;quot;,
+        EmployeeNumber = &amp;quot;8&amp;quot;,
+        LocationName = &amp;quot;TestLocation&amp;quot;,
+        TrainingTypeName = &amp;quot;bca&amp;quot;
+    });
+
+    employees.Sort((x, y) =&amp;gt;
+    {
+        var ret = x.EmployeeName.CompareTo(y.EmployeeName);
+        return ret;
+    });
 }
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;The &lt;em&gt;EmployeeName&lt;/em&gt; property can be literally be replaced with any of the properties in the TrainingEmployee class and the sorty just works. Here we are using the Array.Sort and also using the &lt;a href=&#34;https://msdn.microsoft.com/en-us/library/system.icomparable.compareto(v=vs.110).aspx&#34;&gt;CompareTo&lt;/a&gt; we are comparing the primitive data types. This won&amp;rsquo;t work out of the box for custom data types, if any, in &lt;em&gt;TrainingEmployee&lt;/em&gt; class but requires a EqualityComparer implementation of the custom data type&lt;/p&gt;
+&lt;p&gt;The &lt;em&gt;EmployeeName&lt;/em&gt; property can be literally be replaced with any of the properties in the TrainingEmployee class and the sort just works. Here we are using the Array.Sort and also using the &lt;a href=&#34;https://msdn.microsoft.com/en-us/library/system.icomparable.compareto(v=vs.110).aspx&#34;&gt;CompareTo&lt;/a&gt; we are comparing the primitive data types. This won&amp;rsquo;t work out of the box for custom data types, if any, in &lt;em&gt;TrainingEmployee&lt;/em&gt; class but requires a EqualityComparer implementation of the custom data type&lt;/p&gt;
 
 &lt;p&gt;That is it. It is a short post on how to do sorting of custom types without using LINQ&lt;/p&gt;
 </description>

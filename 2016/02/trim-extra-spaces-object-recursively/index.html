@@ -33,13 +33,14 @@
   
 
   <link rel="stylesheet" href="https://usaipavan.github.io//css/redlounge.css">
+  <link rel="stylesheet" href="https://usaipavan.github.io/css/bootswatch/default/bootstrap.min.css">
   <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Proza+Libre:400,200,100,700,300,500,600,800" rel="stylesheet"> 
   <link href='//fonts.googleapis.com/css?family=Raleway:400,200,100,700,300,500,600,800' rel='stylesheet' type='text/css'>
   <link href='//fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic' rel='stylesheet' type='text/css'>
 
   
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://usaipavan.github.io/touch-icon-144-precomposed.png">  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://usaipavan.github.io/favicon-32x32.png">  
   <link rel="shortcut icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
   <link rel="shortcut icon" type="image/png" href="favicon-16x16.png" sizes="16x16" />
 
@@ -154,46 +155,42 @@
 
 <p>I have created an extension method on object which handles a generic parameter. As a first step I have first trimmed all the strings at the object level. I have done this using reflection and link where we will identify all the strings and just trim the spaces on them which is symbol.</p>
 
-<pre><code class="language-csharp">
-    //Iterates all properties and trims the values if they are strings
-    var properties = obj.GetType().GetProperties(BindingFlags.Instance |    BindingFlags.Public)
-        .Where(prop =&gt; prop.PropertyType == typeof(string))
-        .Where(prop =&gt; prop.CanWrite &amp;&amp; prop.CanRead);
-    
-    foreach (var property in properties)
-    {
-        var value = (string) property.GetValue(obj, null);
-        if (value.HasValue())
-        {
-        var newValue = (object) value.Trim();
-        property.SetValue(obj, newValue, null);
-        }
-    }
+<pre><code class="language-csharp">//Iterates all properties and trims the values if they are strings
+var properties = obj.GetType().GetProperties(BindingFlags.Instance |    BindingFlags.Public)
+    .Where(prop =&gt; prop.PropertyType == typeof(string))
+    .Where(prop =&gt; prop.CanWrite &amp;&amp; prop.CanRead);
 
+foreach (var property in properties)
+{
+    var value = (string) property.GetValue(obj, null);
+    if (value.HasValue())
+    {
+    var newValue = (object) value.Trim();
+    property.SetValue(obj, newValue, null);
+    }
+}
 </code></pre>
 
 <p>As a next step I tried to take care of all the list of objects so that they can each be operated individually and spaces can be trimmed on them. To be able to achieve this I have relied on recursion.</p>
 
-<pre><code class="language-csharp">
-    // This is to take care of Lists. This iterates through each value
-    // in the list.
-    // For example, Countries which is a List&lt;Country&gt;
-    var baseTypeInfo = obj.GetType().BaseType;
-    if (baseTypeInfo != null &amp;&amp; baseTypeInfo.FullName.Contains(&quot;List&quot;))
+<pre><code class="language-csharp">// This is to take care of Lists. This iterates through each value
+// in the list.
+// For example, Countries which is a List&lt;Country&gt;
+var baseTypeInfo = obj.GetType().BaseType;
+if (baseTypeInfo != null &amp;&amp; baseTypeInfo.FullName.Contains(&quot;List&quot;))
+{
+    var listCount = (int) obj.GetType().GetProperty(&quot;Count&quot;).GetValue(obj, null);
+    for (var innerIndex = 0; innerIndex &lt; listCount; innerIndex++)
     {
-        var listCount = (int) obj.GetType().GetProperty(&quot;Count&quot;).GetValue(obj, null);
-        for (var innerIndex = 0; innerIndex &lt; listCount; innerIndex++)
-        {
-            var item = obj.GetType().GetMethod(&quot;get_Item&quot;, new[] {typeof(int)}).Invoke(obj, new object[] {innerIndex});
-            item.TrimSpaces(); // Recursive call
-        }
+        var item = obj.GetType().GetMethod(&quot;get_Item&quot;, new[] {typeof(int)}).Invoke(obj, new object[] {innerIndex});
+        item.TrimSpaces(); // Recursive call
     }
-
+}
 </code></pre>
 
 <p>Now as the last step I have taken care of other custom objects inside the object so that  also be taken care of item in the spaces.</p>
 
-<pre><code>    // Now once we are in a complex type (for example Country) it then needs to
+<pre><code class="language-csharp">    // Now once we are in a complex type (for example Country) it then needs to
     // be trimmed recursively using the initial peice of code of this method
     // Hence if it is a complex type we are recursively calling TrimSpaces
     var customTypes =
@@ -231,10 +228,12 @@
     
         
 
+    var doc = document;
     var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
     var disqus_shortname = 'usaipavan';
     dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    dsq.setAttribute('data-timestamp', +new Date());
+	(doc.head || doc.body).appendChild(dsq);    
 })();
 </script>
 <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>

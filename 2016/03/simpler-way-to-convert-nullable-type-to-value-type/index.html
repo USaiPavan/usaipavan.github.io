@@ -33,13 +33,14 @@
   
 
   <link rel="stylesheet" href="https://usaipavan.github.io//css/redlounge.css">
+  <link rel="stylesheet" href="https://usaipavan.github.io/css/bootswatch/default/bootstrap.min.css">
   <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Proza+Libre:400,200,100,700,300,500,600,800" rel="stylesheet"> 
   <link href='//fonts.googleapis.com/css?family=Raleway:400,200,100,700,300,500,600,800' rel='stylesheet' type='text/css'>
   <link href='//fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic' rel='stylesheet' type='text/css'>
 
   
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://usaipavan.github.io/touch-icon-144-precomposed.png">  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://usaipavan.github.io/favicon-32x32.png">  
   <link rel="shortcut icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
   <link rel="shortcut icon" type="image/png" href="favicon-16x16.png" sizes="16x16" />
 
@@ -152,67 +153,62 @@
 
 <p>Now when these values have to be converted from Nullable value types to normal C# value types we have to be careful in not running into InvalidOperationException</p>
 
-<pre><code class="language-csharp">
-    // Following line of code throws a InvalidOperationException
-    // with message as
-    // Nullable object must have a value.
-    DateTime? sourceValue = null;
-    DateTime destinationValue = sourceValue.Value;
-
+<pre><code class="language-csharp">// Following line of code throws a InvalidOperationException
+// with message as
+// Nullable object must have a value.
+DateTime? sourceValue = null;
+DateTime destinationValue = sourceValue.Value;
 </code></pre>
 
 <p>In order to be able to avoid such an issue we must then resort to a HasValue check and when the value exists it will have to be assigned by calling the Value property of the nullable type otherwise we will assign the default value of that particular type</p>
 
-<pre><code class="language-csharp">    
-    DateTime? sourceValue = null;
-    DateTime destinationValue;
-    if (sourceValue.HasValue)
-    {
-        destinationValue = sourceValue.Value;   
-    }
-    else
-    {
-        destinationValue = default(DateTime);
-    }
-
+<pre><code class="language-csharp">DateTime? sourceValue = null;
+DateTime destinationValue;
+if (sourceValue.HasValue)
+{
+    destinationValue = sourceValue.Value;   
+}
+else
+{
+    destinationValue = default(DateTime);
+}
 </code></pre>
 
 <p>The above code is very verbose and if we have to resort to writing this kind of code for every nullable type to value type conversion in our code it quickly starts to become cumbersome. <a href="https://msdn.microsoft.com/en-us/library/bb383977.aspx">Extension methods</a> have come to my rescue to be able to solve this issue in a more cleaner way. I have written an <a href="http://stackoverflow.com/questions/4928810/how-do-i-write-an-extension-method-for-a-generic-type-with-constraints-on-type-p">generic extension</a> method on Nullable<T> such that it will take the nullable value type and checks for HasValue. In case it has a value then the Value property will be returned. Otherwise, default value of that particular value type will be returned</p>
 
-<pre><code class="language-csharp">
-    public static class MyExtensions
+<pre><code class="language-csharp">public static class MyExtensions
+{
+    // Generic extension method which checks for HasValue and based on that
+    // will return a value
+    public static T ToValueType&lt;T&gt;(this Nullable&lt;T&gt; inputValue) where T : struct
     {
-        // Generic extension method which checks for HasValue and based on that
-        // will return a value
-        public static T ToValueType&lt;T&gt;(this Nullable&lt;T&gt; inputValue) where T : struct
+        if (inputValue.HasValue)
         {
-            if (inputValue.HasValue)
-            {
-                return inputValue.Value;
-            }
-            return default(T);
+            return inputValue.Value;
         }
+        return default(T);
     }
+}
+
+void Main()
+{
+    //Extension method usage
+    DateTime? sourceValue = null;
+    DateTime destinationValue;
+    destinationValue = sourceValue.ToValueType();
+
+    Console.WriteLine($&quot;Destination value for datetime is : {destinationValue} &quot;);
     
-    void Main()
-    {
-        //Extension method usage
-        DateTime? sourceValue = null;
-        DateTime destinationValue;
-        destinationValue = sourceValue.ToValueType();
+    int? sourceIntValue = 1;
+    int destinationIntValue;
+    destinationIntValue = sourceIntValue.ToValueType();
     
-        Console.WriteLine($&quot;Destination value for datetime is : {destinationValue} &quot;);
-        
-        int? sourceIntValue = 1;
-        int destinationIntValue;
-        destinationIntValue = sourceIntValue.ToValueType();
-        
-        Console.WriteLine($&quot;Destination value for datetime is : {destinationIntValue} &quot;);
-    }
-    
-    // Result is as follows
-    // Destination value for datetime is : 1/1/0001 12:00:00 AM 
-    // Destination value for datetime is : 1 
+    Console.WriteLine($&quot;Destination value for datetime is : {destinationIntValue} &quot;);
+}
+
+// Result is as follows
+// Destination value for datetime is : 1/1/0001 12:00:00 AM 
+// Destination value for datetime is : 1 
 
 </code></pre>
 
@@ -237,10 +233,12 @@
     
         
 
+    var doc = document;
     var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
     var disqus_shortname = 'usaipavan';
     dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    dsq.setAttribute('data-timestamp', +new Date());
+	(doc.head || doc.body).appendChild(dsq);    
 })();
 </script>
 <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
