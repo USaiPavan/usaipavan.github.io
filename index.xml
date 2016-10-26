@@ -369,11 +369,11 @@ protected void Page_Load(object sender, EventArgs e)
     </item>
     
     <item>
-      <title>Aiming high</title>
-      <link>https://usaipavan.github.io/page/about/</link>
+      <title>About</title>
+      <link>https://usaipavan.github.io/about/_index/</link>
       <pubDate>Mon, 02 Jan 2012 14:20:34 +0000</pubDate>
       
-      <guid>https://usaipavan.github.io/page/about/</guid>
+      <guid>https://usaipavan.github.io/about/_index/</guid>
       <description>&lt;p&gt;Test about me&lt;/p&gt;
 </description>
     </item>

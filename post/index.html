@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <title>
+    Posts // Sai Pavan&#39;s blog
+  </title>
+
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="author" content="">
+<meta name="generator" content="Hugo 0.17" />
+
+  <meta property="og:title" content="Posts" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:url" content="https://usaipavan.github.io/post/" />
+
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/base-min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/pure-min.css">
+  
+  
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/grids-responsive-min.css">
+  
+  
+
+  <link rel="stylesheet" href="https://usaipavan.github.io//css/redlounge.css">
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Proza+Libre:400,200,100,700,300,500,600,800" rel="stylesheet"> 
+  <link href='//fonts.googleapis.com/css?family=Raleway:400,200,100,700,300,500,600,800' rel='stylesheet' type='text/css'>
+  <link href='//fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic' rel='stylesheet' type='text/css'>
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://usaipavan.github.io/touch-icon-144-precomposed.png">  
+  <link rel="shortcut icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
+  <link rel="shortcut icon" type="image/png" href="favicon-16x16.png" sizes="16x16" />
+
+
+  
+  <link href="https://usaipavan.github.io/post/index.xml" rel="alternate" type="application/rss+xml" title="Sai Pavan&#39;s blog" />
+
+    
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/styles/tomorrow-night-bright.min.css">
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+
+  
+
+  
+
+  
+
+  
+</head>
+
+<body>
+	<div id="layout" class="pure-g">
+    <div class="sidebar pure-u-1 pure-u-md-1-4">
+  <div class="header">
+    
+
+	
+
+    <h1 class="brand-title">Sai Pavan&#39;s blog</h1>
+    <h2 class="brand-tagline">My tryst with .net and software programming in general</h2>
+
+    <nav class="nav">
+      <ul class="nav-list">
+        <li class="nav-item"><span class="nav-item-separator">//</span><a href="https://usaipavan.github.io/">Home</a></li>
+        
+          <li class="nav-item"><span class="nav-item-separator">//</span><a href="https://usaipavan.github.io/about">About</a></li>
+        
+      </ul>
+    </nav>
+
+    
+    <div class="social-buttons">
+              
+        
+        <a href="https://www.linkedin.com/in/usaipavan" target="_blank"><i class='fa fa-linkedin fa-lg fa-fw'></i></a>
+        
+              
+        
+        <a href="https://usaipavan.github.io/index.xml" target="_blank"><i class='fa fa-rss fa-lg fa-fw'></i></a>
+        
+              
+        
+        <a href="https://twitter.com/usaipavan" target="_blank"><i class='fa fa-twitter fa-lg fa-fw' target='_blank'></i></a>
+        
+      
+      
+    </div>
+    
+
+  </div>
+</div>
+
+
+    <div class="content pure-u-1 pure-u-md-3-4">
+      <a name="top"></a>
+      
+
+      <div class="posts">
+        
+          <section  class="post">
+            <header class="post-header">
+            
+            <h1 class="post-title">
+              <a href="https://usaipavan.github.io/2016/07/the-mystery-around-dbentityentry-state/">The mystery around DbEntityEntry.State</a>
+            </h1>
+            </header>
+            <p class="post-meta">
+            	
+		          <span class="post-date">
+		            <span class="post-date-day"><sup>6</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Jul</span> <span class="post-date-year">2016</span>
+		          </span>
+      				
+      				
+      					By <a class="post-author" >Sai Pavan</a>
+      				
+              
+                <span class="post-reading-time"><i class="fa fa-clock-o"></i> <em>2 min. read</em></span>
+              
+              
+                <br />           
+                  <span class="dark-red">Tags</span><span class="decorative-marker">//</span>
+                  
+                  
+                          <a class="post-tag post-tag-c" href="https://usaipavan.github.io//tags/c" style="padding-right: 0.25em;font-size: 0.85rem;">C#</a>
+                          
+                          <a class="post-tag post-tag-entity-framework" href="https://usaipavan.github.io//tags/entity-framework" style="padding-right: 0.25em;font-size: 0.85rem;">Entity Framework</a>
+                                          
+              
+      				
+            </p>
+            
+              <article class="post-summary">
+            	While playing around with EF DbContext ChangeTracker API I happened to observe an interesting behavior of DbContext.Entry().State. I will be using AdventureWorks database with Code First from database for this blog post. Initially I have obtained a row using the Find method on the Addresses entity. Now I have called the Entry method on the DbContext to obtain the DbEntityEntry&lt; Address &gt; and accessed the State property on the same. As expected, the State was &ldquo;Unchanged&rdquo;.
+              </article>
+			  <div class="read-more-link">
+				<a href="https://usaipavan.github.io/2016/07/the-mystery-around-dbentityentry-state/"><span class="read-more-slashes">//</span>Read More...</a>
+			  </div>
+            
+          </section>
+        
+          <section  class="post">
+            <header class="post-header">
+            
+            <h1 class="post-title">
+              <a href="https://usaipavan.github.io/2016/03/simpler-way-to-convert-nullable-type-to-value-type/">Simpler way to convert Nullable type to Value type</a>
+            </h1>
+            </header>
+            <p class="post-meta">
+            	
+		          <span class="post-date">
+		            <span class="post-date-day"><sup>18</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Mar</span> <span class="post-date-year">2016</span>
+		          </span>
+      				
+      				
+      					By <a class="post-author" >Sai Pavan</a>
+      				
+              
+                <span class="post-reading-time"><i class="fa fa-clock-o"></i> <em>3 min. read</em></span>
+              
+              
+                <br />           
+                  <span class="dark-red">Tags</span><span class="decorative-marker">//</span>
+                  
+                  
+                          <a class="post-tag post-tag-c" href="https://usaipavan.github.io//tags/c" style="padding-right: 0.25em;font-size: 0.85rem;">C#</a>
+                                          
+              
+      				
+            </p>
+            
+              <article class="post-summary">
+            	The more we work with databases, more is the need for nullable types. This is because of the inherent difference between the way value types are treated in object oriented world and the relational world. In the object oriented world the value types always have a value either the one that we assign or the one that is the default value. However, in the database world they are treated differently. They are assigned as a data type for a column and it is possible that the column has a value of the column could have NULL (obviously, not in case of NOT NULL columns).
+              </article>
+			  <div class="read-more-link">
+				<a href="https://usaipavan.github.io/2016/03/simpler-way-to-convert-nullable-type-to-value-type/"><span class="read-more-slashes">//</span>Read More...</a>
+			  </div>
+            
+          </section>
+        
+          <section  class="post">
+            <header class="post-header">
+            
+            <h1 class="post-title">
+              <a href="https://usaipavan.github.io/2016/02/trim-extra-spaces-object-recursively/">Trim extra spaces in strings on objects recursively</a>
+            </h1>
+            </header>
+            <p class="post-meta">
+            	
+		          <span class="post-date">
+		            <span class="post-date-day"><sup>27</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Feb</span> <span class="post-date-year">2016</span>
+		          </span>
+      				
+      				
+      					By <a class="post-author" >Sai Pavan</a>
+      				
+              
+                <span class="post-reading-time"><i class="fa fa-clock-o"></i> <em>3 min. read</em></span>
+              
+              
+                <br />           
+                  <span class="dark-red">Tags</span><span class="decorative-marker">//</span>
+                  
+                  
+                          <a class="post-tag post-tag-c" href="https://usaipavan.github.io//tags/c" style="padding-right: 0.25em;font-size: 0.85rem;">C#</a>
+                                          
+              
+      				
+            </p>
+            
+              <article class="post-summary">
+            	Many of us might have had requirement to be able to trim extra spaces in strings on custom classes that we have created, at some point in our career.These extra spaces in strings might have come from a database or maybe from an external system. These not only cause waste of bandwidth but also causes the problem in terms of comparison. Especially when working on APIs that will be used by mobile applications every byte that is being sent across the wire matters.
+              </article>
+			  <div class="read-more-link">
+				<a href="https://usaipavan.github.io/2016/02/trim-extra-spaces-object-recursively/"><span class="read-more-slashes">//</span>Read More...</a>
+			  </div>
+            
+          </section>
+        
+          <section  class="post">
+            <header class="post-header">
+            
+            <h1 class="post-title">
+              <a href="https://usaipavan.github.io/2015/10/sorting-custom-list-without-linq/">Sorting a custom list without LINQ</a>
+            </h1>
+            </header>
+            <p class="post-meta">
+            	
+		          <span class="post-date">
+		            <span class="post-date-day"><sup>9</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Oct</span> <span class="post-date-year">2015</span>
+		          </span>
+      				
+      				
+      					By <a class="post-author" >Sai Pavan</a>
+      				
+              
+                <span class="post-reading-time"><i class="fa fa-clock-o"></i> <em>3 min. read</em></span>
+              
+              
+                <br />           
+                  <span class="dark-red">Tags</span><span class="decorative-marker">//</span>
+                  
+                  
+                          <a class="post-tag post-tag-c" href="https://usaipavan.github.io//tags/c" style="padding-right: 0.25em;font-size: 0.85rem;">C#</a>
+                          
+                          <a class="post-tag post-tag-linq" href="https://usaipavan.github.io//tags/linq" style="padding-right: 0.25em;font-size: 0.85rem;">LINQ</a>
+                                          
+              
+      				
+            </p>
+            
+              <article class="post-summary">
+            	As much as we want to work on latest and greatest technologies sometimes we end up working on older technologies. This becomes especially tough when we have already worked on latest technologies. One such examples is LINQ.
+LINQ has made life of developers so easy that it feels wierd how we used to do stuff like filtering and other actions on collections without using LINQ. Recently I came across a scenario where I had to sort a custom type list based on varoius properties in it.
+              </article>
+			  <div class="read-more-link">
+				<a href="https://usaipavan.github.io/2015/10/sorting-custom-list-without-linq/"><span class="read-more-slashes">//</span>Read More...</a>
+			  </div>
+            
+          </section>
+        
+          <section  class="post">
+            <header class="post-header">
+            
+            <h1 class="post-title">
+              <a href="https://usaipavan.github.io/2012/01/practical-implementation-of-fix-for-xss-vulnerability/">Practical implementation of fix for XSS vulnerability</a>
+            </h1>
+            </header>
+            <p class="post-meta">
+            	
+		          <span class="post-date">
+		            <span class="post-date-day"><sup>5</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Jan</span> <span class="post-date-year">2012</span>
+		          </span>
+      				
+      				
+      					By <a class="post-author" >Sai Pavan</a>
+      				
+              
+                <span class="post-reading-time"><i class="fa fa-clock-o"></i> <em>4 min. read</em></span>
+              
+              
+                <br />           
+                  <span class="dark-red">Tags</span><span class="decorative-marker">//</span>
+                  
+                  
+                          <a class="post-tag post-tag-c" href="https://usaipavan.github.io//tags/c" style="padding-right: 0.25em;font-size: 0.85rem;">C#</a>
+                          
+                          <a class="post-tag post-tag-security" href="https://usaipavan.github.io//tags/security" style="padding-right: 0.25em;font-size: 0.85rem;">Security</a>
+                                          
+              
+      				
+            </p>
+            
+              <article class="post-summary">
+            	In this post, I am going to discuss about the practical way of fixing the XSS vulnerability in ASP.NET applications. An introduction about XSS vulnerability can be found here. So, why I chose to write this blog post. I happened to see quite a few blog posts and sites which discuss about fixing the XSS vulnerability by constraining the input and encoding the output. But, I felt that there is a gap between practical implementation of the suggestion and what is written in the web sites.
+              </article>
+			  <div class="read-more-link">
+				<a href="https://usaipavan.github.io/2012/01/practical-implementation-of-fix-for-xss-vulnerability/"><span class="read-more-slashes">//</span>Read More...</a>
+			  </div>
+            
+          </section>
+        
+          <section  class="post">
+            <header class="post-header">
+            
+            <h1 class="post-title">
+              <a href="https://usaipavan.github.io/2012/01/datetime-vs-stopwatch/">DateTime vs. StopWatch</a>
+            </h1>
+            </header>
+            <p class="post-meta">
+            	
+		          <span class="post-date">
+		            <span class="post-date-day"><sup>3</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Jan</span> <span class="post-date-year">2012</span>
+		          </span>
+      				
+      				
+      					By <a class="post-author" >Sai Pavan</a>
+      				
+              
+                <span class="post-reading-time"><i class="fa fa-clock-o"></i> <em>2 min. read</em></span>
+              
+              
+                <br />           
+                  <span class="dark-red">Tags</span><span class="decorative-marker">//</span>
+                  
+                  
+                          <a class="post-tag post-tag-c" href="https://usaipavan.github.io//tags/c" style="padding-right: 0.25em;font-size: 0.85rem;">C#</a>
+                                          
+              
+      				
+            </p>
+            
+              <article class="post-summary">
+            	Today I was trying to measure performance of an extension method that I have written on a DataSet. Basically, the extension method loops through all the DataTables. On each DataTable it iterates through all the rows (including the column names) and encodes all the strings using the HttpUtility.HtmlEncode method. This is to make sure that we are protecting our site from XSS attack (more about prevention of XSS attacks in ASP.
+              </article>
+			  <div class="read-more-link">
+				<a href="https://usaipavan.github.io/2012/01/datetime-vs-stopwatch/"><span class="read-more-slashes">//</span>Read More...</a>
+			  </div>
+            
+          </section>
+        
+          <section  class="post">
+            <header class="post-header">
+            
+            <h1 class="post-title">
+              <a href="https://usaipavan.github.io/2012/01/aiming-high/">Aiming high</a>
+            </h1>
+            </header>
+            <p class="post-meta">
+            	
+		          <span class="post-date">
+		            <span class="post-date-day"><sup>2</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Jan</span> <span class="post-date-year">2012</span>
+		          </span>
+      				
+      				
+      					By <a class="post-author" >Sai Pavan</a>
+      				
+              
+                <span class="post-reading-time"><i class="fa fa-clock-o"></i> <em>1 min. read</em></span>
+              
+              
+                <br />           
+                  <span class="dark-red">Tags</span><span class="decorative-marker">//</span>
+                  
+                  
+                          <a class="post-tag post-tag-general" href="https://usaipavan.github.io//tags/general" style="padding-right: 0.25em;font-size: 0.85rem;">General</a>
+                                          
+              
+      				
+            </p>
+            
+              <article class="post-summary">
+            	Hello World!!
+Here is my first blog, rather I should say its one of the many of my registered blogs where I took a new year resolution to be active on. I am planning to post all my learning in the Software field on an immediate basis on this blog. Hope people will feel this blog useful.
+To introduce myself, I am a .Net Developer working for an MNC and I have an experience of 3.
+              </article>
+			  <div class="read-more-link">
+				<a href="https://usaipavan.github.io/2012/01/aiming-high/"><span class="read-more-slashes">//</span>Read More...</a>
+			  </div>
+            
+          </section>
+        
+      </div>
+
+      <div class="footer">
+	<hr class="thin" />
+	<div class="pure-menu pure-menu-horizontal pure-menu-open">
+		<ul class="footer-menu">
+		
+		</ul>
+	</div>
+
+	<p>&copy; 2016. All rights reserved.</p>
+</div>
+    </div>
+  </div>
+  
+</body>
+</html>
