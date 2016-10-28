@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+<head>
+  <title>
+    Async Getting Started // Sai Pavan&#39;s blog
+  </title>
+
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="author" content="">
+<meta name="generator" content="Hugo 0.17" />
+
+  <meta property="og:title" content="Async Getting Started" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:url" content="https://usaipavan.github.io/2016/10/async-getting-started/" />
+
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/base-min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/pure-min.css">
+  
+  
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.5.0/grids-responsive-min.css">
+  
+  
+
+  <link rel="stylesheet" href="https://usaipavan.github.io//css/redlounge.css">
+  
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Proza+Libre:400,200,100,700,300,500,600,800" rel="stylesheet"> 
+  <link href='//fonts.googleapis.com/css?family=Raleway:400,200,100,700,300,500,600,800' rel='stylesheet' type='text/css'>
+  <link href='//fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic' rel='stylesheet' type='text/css'>
+
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://usaipavan.github.io//favicon-32x32.png">  
+  <link rel="shortcut icon" type="image/png" href="https://usaipavan.github.io//favicon-32x32.png" sizes="32x32" />
+  <link rel="shortcut icon" type="image/png" href="https://usaipavan.github.io//favicon-16x16.png" sizes="16x16" />
+
+
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="Sai Pavan&#39;s blog" />
+
+    
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/styles/tomorrow-night-blue.min.css">
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+
+  
+
+  
+
+  
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-66140881-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+
+  
+</head>
+
+<body>
+	
+
+	<div id="layout" class="pure-g">
+    <div class="sidebar pure-u-1 pure-u-md-1-4">
+  <div class="header">
+    
+
+	
+
+    <h1 class="brand-title">Sai Pavan&#39;s blog</h1>
+    <h2 class="brand-tagline">My tryst with .net and software programming in general</h2>
+
+    <nav class="nav">
+      <ul class="nav-list">
+        <li class="nav-item"><span class="nav-item-separator">//</span><a href="https://usaipavan.github.io/">Home</a></li>
+        
+          <li class="nav-item"><span class="nav-item-separator">//</span><a href="https://usaipavan.github.io/about">About</a></li>
+        
+      </ul>
+    </nav>
+
+    
+    <div class="social-buttons">
+              
+        
+        <a href="https://www.linkedin.com/in/usaipavan" target="_blank"><i class='fa fa-linkedin fa-lg fa-fw'></i></a>
+        
+              
+        
+        <a href="https://usaipavan.github.io/index.xml" target="_blank"><i class='fa fa-rss fa-lg fa-fw'></i></a>
+        
+              
+        
+        <a href="https://twitter.com/usaipavan" target="_blank"><i class='fa fa-twitter fa-lg fa-fw' target='_blank'></i></a>
+        
+      
+      
+    </div>
+    
+
+    
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-66140881-1', 'auto');
+ga('send', 'pageview');
+</script>
+
+
+  </div>
+</div>
+
+	
+	
+
+    <div class="content pure-u-1 pure-u-md-3-4">
+		<a name="top"></a>
+		
+
+		
+			
+	    
+  		<section class="post">
+            <h1 class="post-title">
+              <a href="https://usaipavan.github.io/2016/10/async-getting-started/">Async Getting Started</a>
+            </h1>
+            <h3 class="post-subtitle">
+            	
+            </h3>
+            
+            	<span class="post-date">
+                	<span class="post-date-day"><sup>28</sup></span><span class="post-date-separator">/</span><span class="post-date-month">Oct</span> <span class="post-date-year">2016</span>
+            	</span>
+            	
+            
+            	
+            
+
+			
+			
+
+			
+
+			
+
+            <p>During initial days of my career, I was working on a project which required regular cleanup of invalid users based on a log and validation with LDAP. As with many of us, software engineers, a repetitive task gives us the urge to automate it. With that feeling I started working on a tool, based on win forms, to be able to cleanup the users. This cleanup process took about 2-4 minutes based on the size of the log file. My initial version of the application had a button, which upon clicking would make the window unresponsive for the aforementioned duration and then come back with list of invalid users. However, as we know that is not a great experience even for an internal tool to be used by a team. Read on, to find out how we can solve the above problem with the latest available C# features</p>
+
+<p>Improving the over all responsiveness of the application while avoiding performance bottlenecks is always desirable and one of the possibilities to achieve that is using asynchronous programming. The usual options to be able to achieve the same are Threading, Thread pools, BackgroundWorker component, Task Parallel Library etc. The latest addition to this list is Task-based Asynchronous Pattern(TAP, referred the same way hereafter).</p>
+
+<p>Introduced in .Net framework 4.5 (C# 5) the TAP is based on two classes <a href="https://msdn.microsoft.com/en-us/library/system.threading.tasks.task(v=vs.110).aspx">Task</a> &amp; <a href="https://msdn.microsoft.com/en-us/library/dd321424(v=vs.110).aspx">Task&lt; TResult &gt;</a> in System.Threading.Tasks namespace. Unlike the previous asynchronous pattern which was based on IAsyncResult which contained Begin &amp; End methods, the TAP is only based on a single method. As a standard practice, these methods are suffixed with the word Async (an example, <a href="https://msdn.microsoft.com/en-us/library/system.data.sqlclient.sqlcommand.executereaderasync(v=vs.110).aspx">ExecuteReaderAsync</a>).</p>
+
+<p>The method signatures of TAP methods would be exactly same as the ones that we would have for synchronous methods. Again, this is different from the previous ways of doing asynchronous programming where we were required to pass standard parameters and wrap our data inside them.</p>
+
+<blockquote>
+<p>Note: We cannot have async methods with ref or out parameters because of limitations of the CLR and also because of the implementation of the async pattern. More on this can be read at <a href="http://stackoverflow.com/questions/18716928/how-to-write-a-async-method-with-out-parameter">http://stackoverflow.com/questions/18716928/how-to-write-a-async-method-with-out-parameter</a></p>
+</blockquote>
+
+<p>TAP methods are usually implemented to do a small amount of synchronous work before returning a Task. To be able to implement TAP, the long running method would be marked with async keyword and will be returning a Task (or Task<TResult>) which gives us the ability to look at the status of the task later. The TAP method is responsible for choosing where asynchronous execution occurs and the potential context couldbe a ThreadPool, asynchronous I/O, specific thread like UI thread etc.</p>
+
+<p>Caller of the async method can either making a blocking wait on the asynchronous method or utilize a &ldquo;continuation&rdquo;. A continuation can simply be considered as a bookmark from which the execution of the method must continue once the asynchronous method execution completes. An await keyword is used for marking the &ldquo;continuation&rdquo; and the method will effectively return from the method.</p>
+
+<p>As the saying goes &ldquo;A picture is worth a thousand words&rdquo; and in our context &ldquo;A code snippet is worth a thousand words&rdquo; :-)</p>
+
+<pre><code class="language-csharp">void Main()
+{
+    Console.WriteLine(&quot;Main method begins execution&quot;);
+    Console.WriteLine(Thread.CurrentThread.ManagedThreadId);
+    WriteLineAsync(&quot;The usual Hello, World!!&quot;);
+    Console.WriteLine(Thread.CurrentThread.ManagedThreadId);
+    Console.WriteLine(&quot;Main method is done executing&quot;);
+}
+
+static Task WriteLineAsync(string text)
+{
+    return Task.Run(() =&gt; WriteLine(text));
+}
+
+static void WriteLine(string text)
+{
+    //Something here takes 2 seconds. duh!!
+    Thread.Sleep(2000);
+    Console.WriteLine(text);
+    Console.WriteLine($&quot;My thread id is {Thread.CurrentThread.ManagedThreadId}&quot;);
+}
+</code></pre>
+
+<p>The output would give more clarity on what is happening</p>
+
+<pre><code class="language-csharp">Main method begins execution
+12
+12
+Main method is done executing
+The usual Hello, World!!
+My thread id is 21
+</code></pre>
+
+<p>Long after the Main method execution completes (2 seconds in our case) the execution of the asynchronous method was complete which proves to us that our application would be responsive while the asynchronous operation is going on. Observe that the ManagedThreadId is 12 during the course of Main method execution while the Task was scheduled on a different ManagedThreadId</p>
+
+<blockquote>
+<p>Note: Please note that the ManagedThreadId could differ when you execute the code on your machine. Also, do not forget to add the namespace System.Threading.Tasks</p>
+</blockquote>
+
+<p>Now, let us look at the scenario where we need the result of the asynchronous method before continuing but somehow don&rsquo;t want to block the current thread. Let&rsquo;s look at the code</p>
+
+<pre><code class="language-csharp">// This the first modification that we need to make
+// However, async void is bad and we would discuss that in the next blog post
+async void Main()
+{
+    Console.WriteLine(&quot;Main method begins execution&quot;);
+    Console.WriteLine(Thread.CurrentThread.ManagedThreadId);
+    // Scheduling a continuation using await keyword
+    await WriteLineAsync(&quot;The usual Hello, World!!&quot;);
+    Console.WriteLine(Thread.CurrentThread.ManagedThreadId);
+    Console.WriteLine(&quot;Main method is done executing&quot;);
+}
+
+static Task WriteLineAsync(string text)
+{
+    return Task.Run(() =&gt; WriteLine(text));
+}
+
+static void WriteLine(string text)
+{
+    //Something here takes 2 seconds. duh!!
+    Thread.Sleep(2000);
+    Console.WriteLine(text);
+    Console.WriteLine($&quot;My thread id is {Thread.CurrentThread.ManagedThreadId}&quot;);
+}
+</code></pre>
+
+<p>The output</p>
+
+<pre><code class="language-csharp">Main method begins execution
+12
+The usual Hello, World!!
+My thread id is 19
+19
+Main method is done executing
+</code></pre>
+
+<p>This output is slightly different from the one that we saw in the previous example. This is because once the await keyword was encountered a &ldquo;continuation&rdquo; was scheduled and the current thread for freed. That is the reason after the Task was executed when the &ldquo;continuation&rdquo; on Main method started executing we see that the ManagedThreadId is different(12 vs 19).</p>
+
+<p>This is fundamental way the TAP along with language features of async &amp; await transform the way we deal with asynchronous programming. No more crazy juggling of context between threads and suffering to pass data the &ldquo;right&rdquo; way between them.</p>
+
+<p>Stay tuned for the next blog post in this series where we would go beyond the basics and also look at some best practices. Till then, Happy coding or as <a href="https://www.dotnetrocks.com/#section_5">Carl</a> puts it &ldquo;Go write some code&rdquo;</p>
+
+	
+			
+
+			
+				<div class="tags-list">
+					<span class="dark-red">Tags</span><span class="decorative-marker">//</span>
+					
+	                <a class="post-tag post-tag-csharp" href="https://usaipavan.github.io//tags/csharp" style="padding-right: 0.25em">C#</a>
+	                
+	                <a class="post-tag post-tag-async" href="https://usaipavan.github.io//tags/async" style="padding-right: 0.25em">Async</a>
+	                
+				</div>
+			
+
+			<div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    
+        
+
+    var doc = document;
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'usaipavan';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    dsq.setAttribute('data-timestamp', +new Date());
+	(doc.head || doc.body).appendChild(dsq);    
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+			
+				<div class="paging">
+					<span class="paging-label">More Reading</span>
+					
+
+					
+					<div class="paging-older">
+						<span class="dark-red">Older</span><span class="decorative-marker">//</span>
+			            <a class="paging-link" href="https://usaipavan.github.io/2016/07/the-mystery-around-dbentityentry-state/">The mystery around DbEntityEntry.State</a>
+		            </div>
+		            
+	            </div>
+            
+          </section>
+          
+          	<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'usaipavan';
+    var disqus_identifier = 'https:\/\/usaipavan.github.io\/2016\/10\/async-getting-started\/';
+    var disqus_title = 'Async Getting Started';
+    var disqus_url = 'https:\/\/usaipavan.github.io\/2016\/10\/async-getting-started\/';
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          
+        
+      <div class="footer">
+	<hr class="thin" />
+	<div class="pure-menu pure-menu-horizontal pure-menu-open">
+		<ul class="footer-menu">
+		
+		</ul>
+	</div>
+
+	<p>&copy; 2016. All rights reserved.</p>
+</div>
+    </div>
+  </div>
+	
+
+	
+
+  
+</body>
+</html>
